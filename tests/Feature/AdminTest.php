@@ -18,7 +18,10 @@ class AdminTest extends TestCase
 
     private function admin(): User
     {
-        return tap(User::factory()->create())->forceFill(['role' => User::ROLE_ADMIN])->save() ? User::latest('id')->first() : null;
+        $admin = User::factory()->create();
+        $admin->forceFill(['role' => User::ROLE_ADMIN])->save();
+
+        return $admin;
     }
 
     public function test_le_back_office_est_reserve_aux_admins(): void
