@@ -4,6 +4,12 @@ Boutique en ligne de mode streetwear pour le marché marocain : prix en dirhams 
 
 **Stack :** Laravel 13 · PHP 8.2+ · Blade · Tailwind CSS 3 · Alpine.js · Vite · SQLite (MySQL possible) · Laravel Breeze
 
+| Accueil | Back-office |
+|---|---|
+| ![Accueil](docs/captures/1-accueil.png) | ![Tableau de bord](docs/captures/6-admin-tableau-de-bord.png) |
+
+Les autres captures sont dans [`docs/captures`](docs/captures) : catalogue, fiche produit, panier, commande et mobile.
+
 ---
 
 ## Fonctionnalités
