@@ -41,6 +41,22 @@
                     <div><dt class="text-ink-500">Nom</dt><dd class="font-medium text-ink-900">{{ $order->customer_name }}</dd></div>
                     <div><dt class="text-ink-500">Téléphone</dt><dd><a href="tel:{{ $order->phone }}" class="font-medium text-primary">{{ $order->phone }}</a></dd></div>
                     @if ($order->email)<div><dt class="text-ink-500">E-mail</dt><dd class="font-medium text-ink-900">{{ $order->email }}</dd></div>@endif
+                    <div>
+                        <dt class="text-ink-500">E-mail de confirmation</dt>
+                        <dd class="mt-1">
+                            @if ($order->confirmation_sent_at)
+                                <x-badge color="green">Envoyé le {{ $order->confirmation_sent_at->translatedFormat('d/m/Y à H:i') }}</x-badge>
+                            @elseif ($order->email)
+                                <x-badge color="red">Non envoyé</x-badge>
+                                <form method="POST" action="{{ route('admin.orders.confirmation', $order) }}" class="mt-2">
+                                    @csrf
+                                    <x-button size="sm" variant="secondary" icon="mail">Renvoyer la confirmation</x-button>
+                                </form>
+                            @else
+                                <span class="text-ink-500">Aucune adresse e-mail</span>
+                            @endif
+                        </dd>
+                    </div>
                     <div><dt class="text-ink-500">Compte</dt><dd class="font-medium text-ink-900">{{ $order->user ? 'Client inscrit' : 'Invité' }}</dd></div>
                 </dl>
             </x-admin.card>

@@ -92,6 +92,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('commandes', [Admin\OrderController::class, 'index'])->name('orders.index');
     Route::get('commandes/{order}', [Admin\OrderController::class, 'show'])->name('orders.show');
     Route::patch('commandes/{order}/statut', [Admin\OrderController::class, 'updateStatus'])->name('orders.status');
+    Route::post('commandes/{order}/confirmation', [Admin\OrderController::class, 'resendConfirmation'])->name('orders.confirmation');
 
     Route::get('clients', [Admin\CustomerController::class, 'index'])->name('customers.index');
 });

@@ -81,38 +81,64 @@ Pour réinitialiser les données : `php artisan migrate:fresh --seed`. Les image
 php artisan test
 ```
 
-51 tests couvrent : panier, prix recalculés côté serveur, transaction de commande et stock, accès privé aux commandes, contrôle d'accès admin, CRUD, upload d'images, e-mails de commande, suivi de commande, formulaires de contact et de newsletter, authentification Breeze.
+59 tests couvrent : panier, prix recalculés côté serveur, transaction de commande et stock, accès privé aux commandes, contrôle d'accès admin, CRUD, upload d'images, e-mails de commande (envoi après validation, aucun envoi si la commande échoue, erreur SMTP, anti-doublon, relance), suivi de commande, formulaires de contact et de newsletter, authentification Breeze.
 
 ---
 
 ## E-mails (confirmation et suivi de commande)
 
-Par défaut (`MAIL_MAILER=log`), les e-mails ne partent pas : leur contenu est écrit dans `storage/logs/laravel.log`, ce qui est pratique pour tester.
+### Fonctionnement
+1. Le client valide sa commande : `OrderService::place()` l'enregistre dans une transaction (prix recalculés, stock décrémenté).
+2. **Seulement après** l'enregistrement réussi, `OrderNotifier::sendConfirmation()` envoie l'e-mail `OrderConfirmed` (HTML responsive + version texte) à l'adresse saisie et validée au checkout.
+3. **Anti-doublon** : la colonne `orders.confirmation_sent_at` est réservée de façon atomique avant l'envoi. Une même commande ne reçoit donc jamais deux confirmations (double clic, relances simultanées…).
+4. **Échec d'envoi** (SMTP indisponible, identifiants erronés…) : la commande est conservée, l'erreur est journalisée dans `storage/logs/laravel.log` avec le numéro de commande, et `confirmation_sent_at` reste vide pour permettre une nouvelle tentative.
+5. **Nouvelle tentative**, sans jamais recréer de commande :
+   - automatique toutes les 15 minutes via le planificateur (`php artisan schedule:work` en local, cron `* * * * * php artisan schedule:run` en production) ;
+   - en ligne de commande : `php artisan orders:send-confirmations` (ou `php artisan orders:send-confirmations TS-XXXXXXXX-XXXXX` pour une commande) ;
+   - depuis le back-office : fiche commande › « Renvoyer la confirmation ».
 
-Pour envoyer de vrais e-mails, renseignez un serveur SMTP dans `.env`. Exemple avec Gmail (créez d'abord un « mot de passe d'application » dans votre compte Google, rubrique Sécurité) :
+Contenu de l'e-mail : objet « Confirmation de votre commande n° … », nom du client, numéro, date et statut de la commande, produits (nom, quantité, prix), sous-total, livraison, total, adresse de livraison, mode de paiement, bouton de suivi, remerciements et coordonnées du service client (`config/shop.php`). Les modèles sont dans `resources/views/emails/`.
 
+### Configuration (`.env` uniquement, jamais dans Git)
+
+Par défaut (`MAIL_MAILER=log`), aucun e-mail ne part : le message complet est écrit dans `storage/logs/laravel.log`.
+
+**Brevo** (gratuit jusqu'à 300 e-mails/jour) : créez un compte, puis *SMTP & API › Clés SMTP* :
+```dotenv
+MAIL_MAILER=smtp
+MAIL_HOST=smtp-relay.brevo.com
+MAIL_PORT=587
+MAIL_USERNAME=votre-identifiant@smtp-brevo.com
+MAIL_PASSWORD=votre-cle-smtp-brevo
+MAIL_FROM_ADDRESS="contact@votre-domaine.ma"   # adresse vérifiée dans Brevo
+MAIL_FROM_NAME="TirrainStyle"
+```
+
+**Gmail** : activez la validation en deux étapes, puis créez un *mot de passe d'application* (Compte Google › Sécurité) :
 ```dotenv
 MAIL_MAILER=smtp
 MAIL_HOST=smtp.gmail.com
 MAIL_PORT=587
 MAIL_USERNAME=votre.adresse@gmail.com
-MAIL_PASSWORD="mot de passe d'application"
+MAIL_PASSWORD="xxxx xxxx xxxx xxxx"
 MAIL_FROM_ADDRESS="votre.adresse@gmail.com"
 MAIL_FROM_NAME="TirrainStyle"
-
-# Facultatif : recevoir une alerte pour chaque nouvelle commande
-SHOP_ADMIN_EMAIL=votre.adresse@gmail.com
 ```
 
-Puis lancez `php artisan config:clear`. Pour tester sans envoyer de vrais e-mails, [Mailtrap](https://mailtrap.io) fournit une boîte de réception de test gratuite.
+Facultatif : `SHOP_ADMIN_EMAIL=...` pour recevoir une alerte à chaque nouvelle commande.
 
-| Événement | E-mail envoyé |
+Après toute modification de `.env` : `php artisan config:clear`.
+
+### Tester un envoi réel
+1. Configurez `.env` comme ci-dessus, puis `php artisan config:clear`.
+2. Lancez `php artisan serve`, ajoutez un produit au panier et validez une commande **avec votre propre adresse e-mail**.
+3. Vérifiez votre boîte de réception (et les spams). La page de confirmation indique l'adresse utilisée.
+4. En cas de problème, consultez la fin de `storage/logs/laravel.log` (message « Échec de l'envoi de la confirmation de commande » avec l'erreur SMTP), corrigez `.env`, puis relancez : `php artisan orders:send-confirmations`.
+
+| Événement | E-mail |
 |---|---|
-| Le client valide sa commande | Confirmation au client, avec récapitulatif et bouton « Suivre ma commande » |
-| Nouvelle commande | Alerte à `SHOP_ADMIN_EMAIL` (si renseignée) |
-| L'admin change le statut | Information au client (case « Prévenir le client par e-mail », cochée par défaut) |
-
-Un échec d'envoi (SMTP indisponible…) ne bloque jamais la commande : l'erreur est simplement journalisée. Les modèles d'e-mails sont dans `resources/views/emails/`.
+| Commande enregistrée | Confirmation au client (une seule fois) + alerte à `SHOP_ADMIN_EMAIL` si renseignée |
+| Changement de statut par l'admin | Information au client (case « Prévenir le client par e-mail ») |
 
 ## Passer à MySQL
 

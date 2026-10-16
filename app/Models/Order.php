@@ -30,6 +30,7 @@ class Order extends Model
             'status' => OrderStatus::class,
             'payment_method' => PaymentMethod::class,
             'payment_status' => PaymentStatus::class,
+            'confirmation_sent_at' => 'datetime',
         ];
     }
 

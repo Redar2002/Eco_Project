@@ -41,6 +41,23 @@ class OrderController extends Controller
         return view('admin.orders.show', ['order' => $order->load('items.product.mainImage', 'user')]);
     }
 
+    /**
+     * Nouvelle tentative d'envoi de la confirmation (si le premier envoi a échoué).
+     * Une confirmation déjà envoyée n'est jamais renvoyée.
+     */
+    public function resendConfirmation(Order $order, OrderNotifier $notifier): RedirectResponse
+    {
+        if ($order->confirmation_sent_at) {
+            return back()->with('error', "La confirmation a déjà été envoyée le {$order->confirmation_sent_at->translatedFormat('d F Y à H:i')}.");
+        }
+
+        if (! $notifier->sendConfirmation($order)) {
+            return back()->with('error', 'L\'envoi a de nouveau échoué. Vérifiez la configuration e-mail (MAIL_*) et le journal storage/logs/laravel.log.');
+        }
+
+        return back()->with('success', "E-mail de confirmation envoyé à {$order->email}.");
+    }
+
     public function updateStatus(UpdateOrderStatusRequest $request, Order $order, OrderService $orders, OrderNotifier $notifier): RedirectResponse
     {
         $status = OrderStatus::from($request->validated('status'));

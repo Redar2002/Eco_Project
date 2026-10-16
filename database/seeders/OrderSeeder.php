@@ -54,7 +54,8 @@ class OrderSeeder extends Seeder
             $order->items()->createMany($items);
 
             $date = now()->subDays(rand(0, 25))->subHours(rand(0, 23));
-            $order->forceFill(['created_at' => $date, 'updated_at' => $date])->saveQuietly();
+            // Commandes de démo : considérées comme déjà confirmées (aucun e-mail ne sera envoyé)
+            $order->forceFill(['created_at' => $date, 'updated_at' => $date, 'confirmation_sent_at' => $date])->saveQuietly();
         }
     }
 }
