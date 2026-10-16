@@ -2,11 +2,11 @@
     {{-- Onglets par statut --}}
     <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
         @php $current = request('status'); @endphp
-        <a href="{{ route('admin.orders.index', request()->except('status', 'page')) }}" @class(['shrink-0 px-4 py-2 text-sm font-medium transition', 'bg-ink-900 text-white' => ! $current, 'bg-white text-ink-600 ring-1 ring-ink-200 hover:ring-ink-400' => $current])>
+        <a href="{{ route('admin.orders.index', request()->except('status', 'page')) }}" @class(['shrink-0 rounded-full px-4 py-2 text-sm font-medium transition', 'bg-ink-900 text-white' => ! $current, 'bg-white text-ink-600 ring-1 ring-ink-200 hover:ring-ink-400' => $current])>
             Toutes <span class="ml-1 opacity-60">{{ $statusCounts->sum() }}</span>
         </a>
         @foreach (\App\Enums\OrderStatus::cases() as $status)
-            <a href="{{ route('admin.orders.index', array_merge(request()->except('page'), ['status' => $status->value])) }}" @class(['shrink-0 px-4 py-2 text-sm font-medium transition', 'bg-ink-900 text-white' => $current === $status->value, 'bg-white text-ink-600 ring-1 ring-ink-200 hover:ring-ink-400' => $current !== $status->value])>
+            <a href="{{ route('admin.orders.index', array_merge(request()->except('page'), ['status' => $status->value])) }}" @class(['shrink-0 rounded-full px-4 py-2 text-sm font-medium transition', 'bg-ink-900 text-white' => $current === $status->value, 'bg-white text-ink-600 ring-1 ring-ink-200 hover:ring-ink-400' => $current !== $status->value])>
                 {{ $status->label() }} <span class="ml-1 opacity-60">{{ $statusCounts[$status->value] ?? 0 }}</span>
             </a>
         @endforeach

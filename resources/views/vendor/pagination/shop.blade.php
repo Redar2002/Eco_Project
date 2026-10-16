@@ -8,9 +8,9 @@
         <ul class="flex flex-1 items-center justify-center gap-1 sm:flex-none">
             <li>
                 @if ($paginator->onFirstPage())
-                    <span class="flex h-10 w-10 items-center justify-center text-ink-300" aria-disabled="true"><x-icon name="chevron-left" class="h-4 w-4" /></span>
+                    <span class="flex h-10 w-10 items-center justify-center rounded-full text-ink-300" aria-disabled="true"><x-icon name="chevron-left" class="h-4 w-4" /></span>
                 @else
-                    <a href="{{ $paginator->previousPageUrl() }}" rel="prev" class="flex h-10 w-10 items-center justify-center text-ink-700 transition hover:bg-ink-100" aria-label="Page précédente"><x-icon name="chevron-left" class="h-4 w-4" /></a>
+                    <a href="{{ $paginator->previousPageUrl() }}" rel="prev" class="flex h-10 w-10 items-center justify-center rounded-full text-ink-700 transition hover:bg-ink-100" aria-label="Page précédente"><x-icon name="chevron-left" class="h-4 w-4" /></a>
                 @endif
             </li>
 
@@ -22,9 +22,9 @@
                     @foreach ($element as $page => $url)
                         <li>
                             @if ($page == $paginator->currentPage())
-                                <span aria-current="page" class="flex h-10 w-10 items-center justify-center bg-primary text-sm font-semibold text-white">{{ $page }}</span>
+                                <span aria-current="page" class="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">{{ $page }}</span>
                             @else
-                                <a href="{{ $url }}" class="flex h-10 w-10 items-center justify-center text-sm font-medium text-ink-700 transition hover:bg-ink-100" aria-label="Page {{ $page }}">{{ $page }}</a>
+                                <a href="{{ $url }}" class="flex h-10 w-10 items-center justify-center rounded-full text-sm font-medium text-ink-700 transition hover:bg-ink-100" aria-label="Page {{ $page }}">{{ $page }}</a>
                             @endif
                         </li>
                     @endforeach
@@ -33,9 +33,9 @@
 
             <li>
                 @if ($paginator->hasMorePages())
-                    <a href="{{ $paginator->nextPageUrl() }}" rel="next" class="flex h-10 w-10 items-center justify-center text-ink-700 transition hover:bg-ink-100" aria-label="Page suivante"><x-icon name="chevron-right" class="h-4 w-4" /></a>
+                    <a href="{{ $paginator->nextPageUrl() }}" rel="next" class="flex h-10 w-10 items-center justify-center rounded-full text-ink-700 transition hover:bg-ink-100" aria-label="Page suivante"><x-icon name="chevron-right" class="h-4 w-4" /></a>
                 @else
-                    <span class="flex h-10 w-10 items-center justify-center text-ink-300" aria-disabled="true"><x-icon name="chevron-right" class="h-4 w-4" /></span>
+                    <span class="flex h-10 w-10 items-center justify-center rounded-full text-ink-300" aria-disabled="true"><x-icon name="chevron-right" class="h-4 w-4" /></span>
                 @endif
             </li>
         </ul>

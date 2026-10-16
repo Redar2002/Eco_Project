@@ -17,6 +17,6 @@
     </form>
 
     <p class="mt-8 text-center text-sm text-ink-500">
-        Déjà inscrit ? <a href="{{ route('login') }}" class="font-semibold text-ink-950 underline decoration-accent decoration-2 underline-offset-4 hover:text-accent-700">Se connecter</a>
+        Déjà inscrit ? <a href="{{ route('login') }}" class="font-semibold text-primary hover:text-primary-950">Se connecter</a>
     </p>
 </x-guest-layout>

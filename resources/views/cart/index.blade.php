@@ -12,9 +12,9 @@
                 {{-- ===== Articles ===== --}}
                 <div>
                     {{-- Progression vers la livraison gratuite --}}
-                    <div class="border border-accent-200 bg-ivory p-4">
+                    <div class="rounded-2xl bg-primary-50 p-4">
                         @if ($cart->remainingForFreeShipping() > 0)
-                            <p class="flex items-center gap-2 text-sm text-ink-800">
+                            <p class="flex items-center gap-2 text-sm text-primary-900">
                                 <x-icon name="truck" class="h-5 w-5" />
                                 Plus que <strong>{{ format_mad($cart->remainingForFreeShipping()) }}</strong> pour profiter de la livraison gratuite !
                             </p>
@@ -23,22 +23,22 @@
                                 <x-icon name="check-circle" class="h-5 w-5" /> Félicitations, la livraison vous est offerte !
                             </p>
                         @endif
-                        <div class="mt-3 h-1 overflow-hidden bg-ink-200">
-                            <div class="h-full bg-gold-gradient transition-all duration-700" style="width: {{ $cart->freeShippingProgress() }}%"></div>
+                        <div class="mt-3 h-1.5 overflow-hidden rounded-full bg-white">
+                            <div class="h-full rounded-full bg-primary transition-all duration-700" style="width: {{ $cart->freeShippingProgress() }}%"></div>
                         </div>
                     </div>
 
                     <ul class="mt-6 divide-y divide-ink-100 border-y border-ink-100">
                         @foreach ($cart->lines as $line)
                             <li class="flex gap-4 py-6 sm:gap-6">
-                                <a href="{{ route('products.show', $line->product) }}" class="h-32 w-24 shrink-0 overflow-hidden bg-ink-100 sm:h-36 sm:w-28">
+                                <a href="{{ route('products.show', $line->product) }}" class="h-32 w-24 shrink-0 overflow-hidden rounded-xl bg-ink-100 sm:h-36 sm:w-28">
                                     <img src="{{ $line->product->image_url }}" alt="{{ $line->product->name }}" class="h-full w-full object-cover">
                                 </a>
                                 <div class="flex flex-1 flex-col">
                                     <div class="flex justify-between gap-4">
                                         <div>
                                             <p class="text-xs uppercase tracking-wider text-ink-400">{{ $line->product->category->name }}</p>
-                                            <a href="{{ route('products.show', $line->product) }}" class="mt-0.5 block font-semibold text-ink-900 hover:text-accent-700">{{ $line->product->name }}</a>
+                                            <a href="{{ route('products.show', $line->product) }}" class="mt-0.5 block font-semibold text-ink-900 hover:text-primary">{{ $line->product->name }}</a>
                                             <x-price :product="$line->product" size="sm" class="mt-1" />
                                         </div>
                                         <p class="text-right font-bold text-ink-900">{{ format_mad($line->lineTotal) }}</p>
@@ -46,7 +46,7 @@
 
                                     <div class="mt-auto flex items-center justify-between pt-4">
                                         {{-- Quantité : chaque bouton envoie la nouvelle quantité --}}
-                                        <form action="{{ route('cart.update', $line->product) }}" method="POST" class="flex items-center border border-ink-300 p-1">
+                                        <form action="{{ route('cart.update', $line->product) }}" method="POST" class="flex items-center rounded-full border border-ink-200 p-1">
                                             @csrf @method('PATCH')
                                             <button type="submit" name="quantity" value="{{ $line->quantity - 1 }}" class="flex h-8 w-8 items-center justify-center rounded-full text-ink-700 transition hover:bg-ink-100" aria-label="Diminuer la quantité">
                                                 <x-icon name="minus" class="h-4 w-4" />
@@ -73,13 +73,13 @@
                         @endforeach
                     </ul>
 
-                    <a href="{{ route('products.index') }}" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-ink-950 underline decoration-accent decoration-2 underline-offset-4 hover:text-accent-700">
+                    <a href="{{ route('products.index') }}" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-950">
                         <x-icon name="arrow-left" class="h-4 w-4" /> Continuer mes achats
                     </a>
                 </div>
 
                 {{-- ===== Récapitulatif ===== --}}
-                <aside class="h-fit bg-ink-50 p-6 lg:sticky lg:top-28">
+                <aside class="h-fit rounded-3xl bg-ink-50 p-6 lg:sticky lg:top-28">
                     <h2 class="text-lg font-semibold">Récapitulatif</h2>
                     <dl class="mt-6 space-y-3 text-sm">
                         <div class="flex justify-between">
@@ -97,9 +97,9 @@
                     </dl>
                     <x-button :href="route('checkout.index')" size="lg" class="mt-6 w-full" icon="lock">Passer la commande</x-button>
                     <ul class="mt-6 space-y-2 text-xs text-ink-500">
-                        <li class="flex items-center gap-2"><x-icon name="cash" class="h-4 w-4 text-accent-600" /> Paiement à la livraison</li>
-                        <li class="flex items-center gap-2"><x-icon name="truck" class="h-4 w-4 text-accent-600" /> Livraison en 24-72 h partout au Maroc</li>
-                        <li class="flex items-center gap-2"><x-icon name="refresh" class="h-4 w-4 text-accent-600" /> Retours gratuits sous 14 jours</li>
+                        <li class="flex items-center gap-2"><x-icon name="cash" class="h-4 w-4 text-primary" /> Paiement à la livraison</li>
+                        <li class="flex items-center gap-2"><x-icon name="truck" class="h-4 w-4 text-primary" /> Livraison en 24-72 h partout au Maroc</li>
+                        <li class="flex items-center gap-2"><x-icon name="refresh" class="h-4 w-4 text-primary" /> Retours gratuits sous 14 jours</li>
                     </ul>
                 </aside>
             </div>

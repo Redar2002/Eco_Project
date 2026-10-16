@@ -18,7 +18,7 @@
         <td align="right" style="padding:4px 0;font-size:13px;color:#171717;">{{ $order->shipping_fee == 0 ? 'Offerte' : format_mad($order->shipping_fee) }}</td>
     </tr>
     <tr>
-        <td style="padding:12px 0 0;font-size:16px;font-weight:bold;color:#0A0A0A;border-top:2px solid #0A0A0A;">Total à payer</td>
-        <td align="right" style="padding:12px 0 0;font-size:16px;font-weight:bold;color:#0A0A0A;border-top:2px solid #0A0A0A;white-space:nowrap;">{{ format_mad($order->total) }}</td>
+        <td style="padding:12px 0 0;font-size:16px;font-weight:bold;color:#0F172A;border-top:2px solid #0F172A;">Total à payer</td>
+        <td align="right" style="padding:12px 0 0;font-size:16px;font-weight:bold;color:#0F172A;border-top:2px solid #0F172A;white-space:nowrap;">{{ format_mad($order->total) }}</td>
     </tr>
 </table>

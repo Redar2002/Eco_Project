@@ -2,12 +2,12 @@
 <ul class="divide-y divide-ink-100">
     @foreach ($order->items as $item)
         <li class="flex items-center gap-4 p-4 sm:px-6">
-            <div class="h-16 w-14 shrink-0 overflow-hidden bg-ink-100">
+            <div class="h-16 w-14 shrink-0 overflow-hidden rounded-lg bg-ink-100">
                 <img src="{{ $item->product?->image_url ?? asset('images/placeholder.svg') }}" alt="" class="h-full w-full object-cover">
             </div>
             <div class="flex-1">
                 @if ($item->product && $item->product->is_active && empty($admin))
-                    <a href="{{ route('products.show', $item->product) }}" class="text-sm font-semibold text-ink-900 hover:text-accent-700">{{ $item->product_name }}</a>
+                    <a href="{{ route('products.show', $item->product) }}" class="text-sm font-semibold text-ink-900 hover:text-primary">{{ $item->product_name }}</a>
                 @else
                     <p class="text-sm font-semibold text-ink-900">{{ $item->product_name }}</p>
                 @endif

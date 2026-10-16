@@ -15,8 +15,8 @@
 <x-mail-layout :subject="$headline" :preheader="$headline.' — commande '.$order->number">
     <tr>
         <td style="padding:40px 40px 8px;text-align:center;">
-            <p style="margin:0;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:{{ $cancelled ? '#B91C1C' : '#C9A24B' }};">Commande {{ $order->number }}</p>
-            <h1 style="margin:12px 0 0;font-family:Georgia,'Times New Roman',serif;font-size:28px;font-weight:normal;color:#0A0A0A;">{{ $headline }}</h1>
+            <p style="margin:0;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:{{ $cancelled ? '#B91C1C' : '#F59E0B' }};">Commande {{ $order->number }}</p>
+            <h1 style="margin:12px 0 0;font-family:Helvetica,Arial,sans-serif;font-size:28px;font-weight:bold;color:#0F172A;">{{ $headline }}</h1>
             <p style="margin:16px 0 0;font-size:15px;line-height:24px;color:#525252;">Bonjour {{ \Illuminate\Support\Str::before($order->customer_name, ' ') }}, {{ lcfirst($text) }}</p>
         </td>
     </tr>
@@ -30,8 +30,8 @@
                         @foreach ($steps as $i => $step)
                             @php $done = $i <= $current; @endphp
                             <td width="25%" align="center" valign="top" style="padding:0 4px;">
-                                <div style="height:4px;background:{{ $done ? '#C9A24B' : '#E5E5E5' }};line-height:4px;font-size:4px;">&nbsp;</div>
-                                <p style="margin:10px 0 0;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:{{ $done ? '#0A0A0A' : '#A3A3A3' }};font-weight:{{ $i === $current ? 'bold' : 'normal' }};">{{ $step->label() }}</p>
+                                <div style="height:4px;background:{{ $done ? '#F59E0B' : '#E5E5E5' }};line-height:4px;font-size:4px;">&nbsp;</div>
+                                <p style="margin:10px 0 0;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:{{ $done ? '#0F172A' : '#A3A3A3' }};font-weight:{{ $i === $current ? 'bold' : 'normal' }};">{{ $step->label() }}</p>
                             </td>
                         @endforeach
                     </tr>

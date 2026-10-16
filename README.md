@@ -1,6 +1,6 @@
 # TirrainStyle — Boutique e-commerce Laravel
 
-Boutique en ligne de mode streetwear haut de gamme (charte **Noir, Blanc, Or et Rouge**) pour le marché marocain : prix en dirhams (format « 1 299,00 MAD »), paiement à la livraison et interface entièrement en français.
+Boutique en ligne de mode streetwear pour le marché marocain : prix en dirhams (format « 1 299,00 MAD »), paiement à la livraison et interface entièrement en français.
 
 **Stack :** Laravel 13 · PHP 8.2+ · Blade · Tailwind CSS 3 · Alpine.js · Vite · SQLite (MySQL possible) · Laravel Breeze
 

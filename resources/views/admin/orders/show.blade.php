@@ -26,7 +26,7 @@
                     <x-select name="status" label="Nouveau statut" :options="\App\Enums\OrderStatus::options()" :value="$order->status->value" />
                     <input type="hidden" name="notify" value="0">
                     <label class="flex items-start gap-3 text-sm text-ink-700">
-                        <input type="checkbox" name="notify" value="1" checked class="mt-0.5 h-4 w-4 rounded-none-none border-ink-300 text-ink-950 focus:ring-accent" @disabled(! $order->email)>
+                        <input type="checkbox" name="notify" value="1" checked class="mt-0.5 h-4 w-4 rounded border-ink-300 text-primary focus:ring-primary-600" @disabled(! $order->email)>
                         <span>Prévenir le client par e-mail
                             <span class="block text-xs text-ink-500">{{ $order->email ?: 'Aucune adresse e-mail pour cette commande' }}</span>
                         </span>
@@ -48,7 +48,7 @@
             <x-admin.card title="Livraison & paiement">
                 <dl class="space-y-3 text-sm">
                     <div><dt class="text-ink-500">Adresse</dt><dd class="font-medium text-ink-900">{{ $order->address }}, {{ $order->city }}</dd></div>
-                    @if ($order->notes)<div><dt class="text-ink-500">Instructions</dt><dd class=" bg-ink-50 p-3 text-ink-700">{{ $order->notes }}</dd></div>@endif
+                    @if ($order->notes)<div><dt class="text-ink-500">Instructions</dt><dd class="rounded-xl bg-ink-50 p-3 text-ink-700">{{ $order->notes }}</dd></div>@endif
                     <div><dt class="text-ink-500">Paiement</dt><dd class="font-medium text-ink-900">{{ $order->payment_method->label() }}</dd></div>
                     <div><dt class="text-ink-500">État du paiement</dt><dd><x-badge :color="$order->payment_status->value === 'paid' ? 'green' : 'slate'">{{ $order->payment_status->label() }}</x-badge></dd></div>
                     <div><dt class="text-ink-500">Date</dt><dd class="font-medium text-ink-900">{{ $order->created_at->translatedFormat('d F Y à H:i') }}</dd></div>

@@ -10,7 +10,7 @@ $links = [
     @foreach ($links as [$route, $icon, $label])
         @php $active = request()->routeIs($route) || ($route === 'account.orders.index' && request()->routeIs('account.orders.*')); @endphp
         <a href="{{ route($route) }}" @class([
-            'flex shrink-0 items-center gap-3 px-4 py-2.5 text-sm font-medium transition',
+            'flex shrink-0 items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition',
             'bg-primary text-white shadow-sm' => $active,
             'text-ink-600 hover:bg-ink-100 hover:text-ink-900' => ! $active,
         ])>
@@ -19,7 +19,7 @@ $links = [
     @endforeach
     <form method="POST" action="{{ route('logout') }}" class="shrink-0 lg:mt-4 lg:border-t lg:border-ink-100 lg:pt-4">
         @csrf
-        <button type="submit" class="flex w-full items-center gap-3 px-4 py-2.5 text-sm font-medium text-ink-600 transition hover:bg-red-50 hover:text-red-600">
+        <button type="submit" class="flex w-full items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-ink-600 transition hover:bg-red-50 hover:text-red-600">
             <x-icon name="logout" class="h-5 w-5" /> Déconnexion
         </button>
     </form>

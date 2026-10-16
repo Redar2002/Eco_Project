@@ -10,8 +10,8 @@
         </div>
         <div class="grid grid-cols-2 gap-4">
             @foreach ([['+12 000', 'clients satisfaits'], ['30+', 'références en stock'], ['24-72 h', 'délai de livraison'], ['4,8/5', 'note moyenne']] as [$value, $label])
-                <div class=" bg-ink-50 p-6">
-                    <p class="font-display text-4xl text-accent-600">{{ $value }}</p>
+                <div class="rounded-3xl bg-ink-50 p-6">
+                    <p class="font-display text-3xl font-bold text-primary">{{ $value }}</p>
                     <p class="mt-1 text-sm text-ink-500">{{ $label }}</p>
                 </div>
             @endforeach
@@ -26,8 +26,8 @@
                 ['sparkles', 'Style accessible', 'Des prix justes pour que le style ne soit jamais un luxe.'],
                 ['chat', 'Proximité', 'Une équipe marocaine, joignable par téléphone et WhatsApp 7j/7.'],
             ] as [$icon, $title, $text])
-                <div class=" border border-ink-100 p-8 transition hover:-translate-y-1 hover:shadow-lift">
-                    <span class="flex h-12 w-12 items-center justify-center bg-ink-950 text-accent"><x-icon :name="$icon" class="h-6 w-6" /></span>
+                <div class="rounded-3xl border border-ink-100 p-8 transition hover:-translate-y-1 hover:shadow-lift">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-white"><x-icon :name="$icon" class="h-6 w-6" /></span>
                     <h3 class="mt-5 text-lg font-semibold">{{ $title }}</h3>
                     <p class="mt-2 text-ink-500">{{ $text }}</p>
                 </div>

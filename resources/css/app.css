@@ -12,16 +12,7 @@
     }
 
     h1, h2, h3, h4 {
-        @apply font-display font-medium text-ink-950;
-    }
-
-    /* Chiffres alignés (Playfair utilise des chiffres elzéviriens par défaut) */
-    h1, h2, h3, h4, .font-display {
-        font-variant-numeric: lining-nums;
-    }
-
-    ::selection {
-        @apply bg-accent text-ink-950;
+        @apply font-display text-ink-900;
     }
 
     [x-cloak] {
@@ -35,33 +26,13 @@
         @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
     }
 
-    /* Champs de formulaire : angles nets, focus doré */
+    /* Champs de formulaire homogènes */
     .form-input {
-        @apply block w-full rounded-none border-ink-300 bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-400 transition focus:border-accent focus:ring-1 focus:ring-accent;
+        @apply block w-full rounded-xl border-ink-200 bg-white px-4 py-2.5 text-sm text-ink-900 shadow-sm placeholder:text-ink-400 transition focus:border-primary-600 focus:ring-2 focus:ring-primary-600/20;
     }
 
     .form-label {
-        @apply mb-2 block text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-600;
-    }
-
-    /* Petit titre doré au-dessus des sections */
-    .eyebrow {
-        @apply inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-luxe text-accent-600;
-    }
-
-    .eyebrow::before {
-        content: '';
-        @apply h-px w-8 bg-current;
-    }
-
-    /* Texte doré en dégradé */
-    .text-gold {
-        @apply bg-gold-gradient bg-clip-text text-transparent;
-    }
-
-    /* Filet doré décoratif */
-    .gold-rule {
-        @apply h-px w-16 bg-accent;
+        @apply mb-1.5 block text-sm font-medium text-ink-700;
     }
 
     /* Texte long (pages statiques, descriptions) */
@@ -70,20 +41,11 @@
     }
 
     .rich-text h2 {
-        @apply mt-10 text-2xl text-ink-950;
+        @apply mt-8 text-xl font-semibold;
     }
 
     .rich-text ul {
-        @apply list-disc space-y-1 pl-5 marker:text-accent;
-    }
-
-    /* Apparition au défilement (voir directive x-reveal dans app.js) */
-    .reveal {
-        @apply translate-y-6 opacity-0 transition duration-700 ease-out;
-    }
-
-    .reveal.is-visible {
-        @apply translate-y-0 opacity-100;
+        @apply list-disc space-y-1 pl-5;
     }
 }
 
@@ -94,15 +56,5 @@
 
     .scrollbar-none::-webkit-scrollbar {
         display: none;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .reveal {
-        @apply translate-y-0 opacity-100 transition-none;
-    }
-
-    .animate-marquee {
-        animation: none;
     }
 }

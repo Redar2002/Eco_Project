@@ -18,7 +18,7 @@
                 @foreach ($orders as $order)
                     <tr class="transition hover:bg-ink-50/60">
                         <td class="whitespace-nowrap px-5 py-3">
-                            <a href="{{ route('admin.orders.show', $order) }}" class="font-semibold text-ink-900 hover:text-accent-700">{{ $order->number }}</a>
+                            <a href="{{ route('admin.orders.show', $order) }}" class="font-semibold text-ink-900 hover:text-primary">{{ $order->number }}</a>
                             <p class="text-xs text-ink-500">{{ $order->created_at->translatedFormat('d M Y, H:i') }}</p>
                         </td>
                         <td class="px-5 py-3">
@@ -30,7 +30,7 @@
                         <td class="whitespace-nowrap px-5 py-3 text-right font-semibold text-ink-900">{{ format_mad($order->total) }}</td>
                         @empty($compact)
                             <td class="px-5 py-3 text-right">
-                                <a href="{{ route('admin.orders.show', $order) }}" class="inline-flex p-2 text-ink-500 hover:bg-ink-100 hover:text-ink-900" aria-label="Voir la commande"><x-icon name="eye" class="h-4 w-4" /></a>
+                                <a href="{{ route('admin.orders.show', $order) }}" class="inline-flex rounded-lg p-2 text-ink-500 hover:bg-ink-100 hover:text-ink-900" aria-label="Voir la commande"><x-icon name="eye" class="h-4 w-4" /></a>
                             </td>
                         @endempty
                     </tr>

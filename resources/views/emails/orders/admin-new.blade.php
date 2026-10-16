@@ -1,10 +1,10 @@
 <x-mail-layout :subject="'Nouvelle commande '.$order->number">
     <tr>
         <td style="padding:36px 40px 0;">
-            <p style="margin:0;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#C9A24B;">Nouvelle commande</p>
-            <h1 style="margin:10px 0 0;font-family:Georgia,serif;font-size:26px;font-weight:normal;color:#0A0A0A;">{{ $order->number }} — {{ format_mad($order->total) }}</h1>
+            <p style="margin:0;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#F59E0B;">Nouvelle commande</p>
+            <h1 style="margin:10px 0 0;font-family:Helvetica,Arial,sans-serif;font-size:26px;font-weight:bold;color:#0F172A;">{{ $order->number }} — {{ format_mad($order->total) }}</h1>
             <p style="margin:14px 0 0;font-size:14px;line-height:22px;color:#525252;">
-                <strong style="color:#0A0A0A;">{{ $order->customer_name }}</strong> · {{ $order->phone }} · {{ $order->email }}<br>
+                <strong style="color:#0F172A;">{{ $order->customer_name }}</strong> · {{ $order->phone }} · {{ $order->email }}<br>
                 {{ $order->address }}, {{ $order->city }}
                 @if ($order->notes)<br><em>« {{ $order->notes }} »</em>@endif
             </p>

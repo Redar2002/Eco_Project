@@ -28,7 +28,7 @@
                             <tr class="transition hover:bg-ink-50/60">
                                 <td class="px-5 py-3">
                                     <div class="flex items-center gap-3">
-                                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ink-950 text-sm font-semibold text-accent">{{ mb_strtoupper(mb_substr($customer->name, 0, 1)) }}</span>
+                                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-50 text-sm font-semibold text-primary">{{ mb_strtoupper(mb_substr($customer->name, 0, 1)) }}</span>
                                         <div class="min-w-0">
                                             <p class="font-semibold text-ink-900">{{ $customer->name }}</p>
                                             <p class="truncate text-xs text-ink-500">{{ $customer->email }}</p>
