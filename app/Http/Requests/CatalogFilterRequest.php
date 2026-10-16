@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -29,7 +30,7 @@ class CatalogFilterRequest extends FormRequest
     /**
      * En cas de paramètre invalide on l'ignore simplement plutôt que de bloquer la page.
      */
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator): void
+    protected function failedValidation(Validator $validator): void
     {
         $this->replace(collect($this->query())->except($validator->errors()->keys())->all());
     }
