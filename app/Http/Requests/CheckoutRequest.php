@@ -26,7 +26,8 @@ class CheckoutRequest extends FormRequest
     {
         return [
             'customer_name' => ['required', 'string', 'min:3', 'max:100'],
-            'email' => ['nullable', 'email', 'max:150'],
+            // Obligatoire : la confirmation et le suivi de commande sont envoyés par e-mail
+            'email' => ['required', 'email', 'max:150'],
             // Numéro marocain : 06/07/05 + 8 chiffres, ou +212 + 9 chiffres
             'phone' => ['required', 'regex:/^(?:\+212|0)[5-7]\d{8}$/'],
             'city' => ['required', 'string', 'max:80'],

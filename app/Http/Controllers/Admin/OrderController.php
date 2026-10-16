@@ -6,6 +6,7 @@ use App\Enums\OrderStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateOrderStatusRequest;
 use App\Models\Order;
+use App\Services\OrderNotifier;
 use App\Services\OrderService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -40,14 +41,26 @@ class OrderController extends Controller
         return view('admin.orders.show', ['order' => $order->load('items.product.mainImage', 'user')]);
     }
 
-    public function updateStatus(UpdateOrderStatusRequest $request, Order $order, OrderService $orders): RedirectResponse
+    public function updateStatus(UpdateOrderStatusRequest $request, Order $order, OrderService $orders, OrderNotifier $notifier): RedirectResponse
     {
         $status = OrderStatus::from($request->validated('status'));
+        $previous = $order->status;
 
         try {
             $orders->updateStatus($order, $status);
         } catch (ValidationException $e) {
             return back()->with('error', collect($e->errors())->flatten()->first());
+        }
+
+        if ($previous === $status) {
+            return back()->with('success', 'Aucun changement de statut.');
+        }
+
+        // Le client est prévenu par e-mail (si l'option est cochée)
+        if ($request->boolean('notify', true) && $order->email) {
+            $notifier->statusChanged($order);
+
+            return back()->with('success', "Statut : {$status->label()}. Le client a été informé par e-mail.");
         }
 
         return back()->with('success', "Statut de la commande {$order->number} : {$status->label()}.");

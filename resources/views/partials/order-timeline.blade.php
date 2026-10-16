@@ -12,12 +12,17 @@
             @php $done = $i <= $currentIndex; @endphp
             <li class="relative flex flex-col items-center text-center">
                 @if ($i > 0)
-                    <span @class(['absolute right-1/2 top-4 h-0.5 w-full -translate-y-1/2', 'bg-primary' => $done, 'bg-ink-200' => ! $done])></span>
+                    <span @class(['absolute right-1/2 top-5 h-px w-full', 'bg-accent' => $done, 'bg-ink-200' => ! $done])></span>
                 @endif
-                <span @class(['relative z-10 flex h-8 w-8 items-center justify-center rounded-full ring-4 ring-white', 'bg-primary text-white' => $done, 'bg-ink-100 text-ink-400' => ! $done])>
-                    @if ($done)<x-icon name="check" class="h-4 w-4" stroke="2.5" />@else<span class="text-xs font-semibold">{{ $i + 1 }}</span>@endif
+                <span @class([
+                    'relative z-10 flex h-10 w-10 items-center justify-center rounded-full ring-8 ring-white',
+                    'bg-ink-950 text-accent' => $done,
+                    'border border-ink-200 bg-white text-ink-400' => ! $done,
+                    'shadow-gold' => $i === $currentIndex,
+                ])>
+                    @if ($done)<x-icon name="check" class="h-4 w-4" stroke="2.5" />@else<span class="font-display text-sm">{{ $i + 1 }}</span>@endif
                 </span>
-                <span @class(['mt-2 text-xs font-medium sm:text-sm', 'text-ink-900' => $done, 'text-ink-400' => ! $done])>{{ $step->label() }}</span>
+                <span @class(['mt-3 text-[10px] font-semibold uppercase tracking-[0.14em] sm:text-[11px]', 'text-ink-950' => $done, 'text-ink-400' => ! $done])>{{ $step->label() }}</span>
             </li>
         @endforeach
     </ol>

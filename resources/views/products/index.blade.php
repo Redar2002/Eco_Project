@@ -37,18 +37,18 @@
                         <h3 class="font-sans text-sm font-semibold uppercase tracking-wider text-ink-900">Catégories</h3>
                         <ul class="mt-4 space-y-1">
                             <li>
-                                <label class="flex cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-sm transition hover:bg-ink-50 has-[:checked]:bg-primary-50 has-[:checked]:font-semibold has-[:checked]:text-primary">
+                                <label class="flex cursor-pointer items-center justify-between px-3 py-2 text-sm transition hover:bg-ink-50 has-[:checked]:bg-ivory has-[:checked]:font-semibold has-[:checked]:text-primary">
                                     <span class="flex items-center gap-3">
-                                        <input type="radio" name="categorie" value="" class="h-4 w-4 border-ink-300 text-primary focus:ring-primary-600" @checked(! isset($filters['categorie']))>
+                                        <input type="radio" name="categorie" value="" class="h-4 w-4 border-ink-300 text-primary focus:ring-accent" @checked(! isset($filters['categorie']))>
                                         Toutes
                                     </span>
                                 </label>
                             </li>
                             @foreach ($categories as $category)
                                 <li>
-                                    <label class="flex cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-sm transition hover:bg-ink-50 has-[:checked]:bg-primary-50 has-[:checked]:font-semibold has-[:checked]:text-primary">
+                                    <label class="flex cursor-pointer items-center justify-between px-3 py-2 text-sm transition hover:bg-ink-50 has-[:checked]:bg-ivory has-[:checked]:font-semibold has-[:checked]:text-primary">
                                         <span class="flex items-center gap-3">
-                                            <input type="radio" name="categorie" value="{{ $category->slug }}" class="h-4 w-4 border-ink-300 text-primary focus:ring-primary-600" @checked(($filters['categorie'] ?? null) === $category->slug)>
+                                            <input type="radio" name="categorie" value="{{ $category->slug }}" class="h-4 w-4 border-ink-300 text-primary focus:ring-accent" @checked(($filters['categorie'] ?? null) === $category->slug)>
                                             {{ $category->name }}
                                         </span>
                                         <span class="text-xs text-ink-400">{{ $category->products_count }}</span>
@@ -70,7 +70,7 @@
                         <div class="mt-3 flex flex-wrap gap-2">
                             @foreach ([[null, 200], [200, 500], [500, null]] as [$from, $to])
                                 <a href="{{ route('products.index', array_merge(\Illuminate\Support\Arr::except($filters, ['min', 'max']), array_filter(['min' => $from, 'max' => $to]))) }}"
-                                   class="rounded-full border border-ink-200 px-3 py-1 text-xs text-ink-600 transition hover:border-ink-900 hover:text-ink-900">
+                                   class=" border border-ink-200 px-3 py-1 text-xs text-ink-600 transition hover:border-ink-900 hover:text-ink-900">
                                     {{ $from ? ($to ? $from.' – '.$to : 'Plus de '.$from) : 'Moins de '.$to }} MAD
                                 </a>
                             @endforeach
@@ -79,7 +79,7 @@
 
                     <div>
                         <label class="flex cursor-pointer items-center gap-3 text-sm font-medium text-ink-700">
-                            <input type="checkbox" name="promo" value="1" class="h-4 w-4 rounded border-ink-300 text-primary focus:ring-primary-600" @checked(isset($filters['promo']))>
+                            <input type="checkbox" name="promo" value="1" class="h-4 w-4 rounded-none border-ink-300 text-primary focus:ring-accent" @checked(isset($filters['promo']))>
                             Uniquement les promotions
                         </label>
                     </div>
@@ -100,16 +100,16 @@
                         <span class="font-semibold text-ink-900">{{ $products->total() }}</span> {{ Str::plural('produit', $products->total()) }}
                     </p>
                     <div class="flex items-center gap-2">
-                        <button type="button" @click="filtersOpen = true" class="inline-flex items-center gap-2 rounded-full border border-ink-200 px-4 py-2 text-sm font-medium lg:hidden">
+                        <button type="button" @click="filtersOpen = true" class="inline-flex items-center gap-2 border border-ink-200 px-4 py-2 text-sm font-medium lg:hidden">
                             <x-icon name="filter" class="h-4 w-4" /> Filtres
-                            @if ($chips->isNotEmpty())<span class="rounded-full bg-primary px-1.5 text-xs text-white">{{ $chips->count() }}</span>@endif
+                            @if ($chips->isNotEmpty())<span class=" bg-primary px-1.5 text-xs text-white">{{ $chips->count() }}</span>@endif
                         </button>
                         <form action="{{ route('products.index') }}" method="GET" x-data>
                             @foreach (\Illuminate\Support\Arr::except($filters, 'tri') as $key => $value)
                                 <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                             @endforeach
                             <label for="tri" class="sr-only">Trier par</label>
-                            <select id="tri" name="tri" @change="$el.form.submit()" class="rounded-full border-ink-200 py-2 pl-4 pr-10 text-sm font-medium focus:border-primary-600 focus:ring-primary-600/20">
+                            <select id="tri" name="tri" @change="$el.form.submit()" class="border-ink-300 py-2.5 pl-4 pr-10 text-xs uppercase tracking-wider text-sm font-medium focus:border-accent focus:ring-accent">
                                 @foreach ($sortOptions as $value => $label)
                                     <option value="{{ $value }}" @selected(($filters['tri'] ?? 'nouveautes') === $value)>Trier : {{ $label }}</option>
                                 @endforeach
@@ -123,7 +123,7 @@
                     <div class="mt-4 flex flex-wrap gap-2">
                         @foreach ($chips as $key => $label)
                             <a href="{{ route('products.index', \Illuminate\Support\Arr::except($filters, $key)) }}"
-                               class="inline-flex items-center gap-1.5 rounded-full bg-ink-100 py-1.5 pl-3 pr-2 text-xs font-medium text-ink-700 transition hover:bg-ink-200">
+                               class="inline-flex items-center gap-1.5 border border-ink-200 bg-white py-1.5 pl-3 pr-2 text-xs font-medium text-ink-700 transition hover:bg-ink-200">
                                 {{ $label }} <x-icon name="x" class="h-3.5 w-3.5" />
                             </a>
                         @endforeach

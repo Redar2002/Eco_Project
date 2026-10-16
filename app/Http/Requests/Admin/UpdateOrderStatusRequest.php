@@ -17,6 +17,7 @@ class UpdateOrderStatusRequest extends FormRequest
     {
         return [
             'status' => ['required', Rule::enum(OrderStatus::class)],
+            'notify' => ['sometimes', 'boolean'],
         ];
     }
 }

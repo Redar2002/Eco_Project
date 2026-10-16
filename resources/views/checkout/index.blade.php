@@ -26,7 +26,7 @@
             <div class="space-y-10">
                 {{-- Coordonnées --}}
                 <section>
-                    <h2 class="flex items-center gap-3 text-lg font-semibold"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-50 text-primary"><x-icon name="user" class="h-4 w-4" /></span> Vos coordonnées</h2>
+                    <h2 class="flex items-center gap-3 text-lg font-semibold"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-accent-50 text-accent-700"><x-icon name="user" class="h-4 w-4" /></span> Vos coordonnées</h2>
                     <div class="mt-5 grid gap-5 sm:grid-cols-2">
                         <x-input name="customer_name" label="Nom complet" :value="$user?->name" required autocomplete="name" class="sm:col-span-2" />
                         <x-input name="phone" type="tel" label="Téléphone" :value="$user?->phone" required autocomplete="tel" placeholder="06 12 34 56 78" hint="Le livreur vous appellera avant la livraison." />
@@ -36,7 +36,7 @@
 
                 {{-- Adresse --}}
                 <section>
-                    <h2 class="flex items-center gap-3 text-lg font-semibold"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-50 text-primary"><x-icon name="map-pin" class="h-4 w-4" /></span> Adresse de livraison</h2>
+                    <h2 class="flex items-center gap-3 text-lg font-semibold"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-accent-50 text-accent-700"><x-icon name="map-pin" class="h-4 w-4" /></span> Adresse de livraison</h2>
                     <div class="mt-5 grid gap-5 sm:grid-cols-2">
                         <div>
                             <x-input name="city" label="Ville" required list="cities" autocomplete="address-level2" placeholder="Casablanca" />
@@ -51,19 +51,19 @@
 
                 {{-- Paiement --}}
                 <section>
-                    <h2 class="flex items-center gap-3 text-lg font-semibold"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-50 text-primary"><x-icon name="card" class="h-4 w-4" /></span> Mode de paiement</h2>
+                    <h2 class="flex items-center gap-3 text-lg font-semibold"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-accent-50 text-accent-700"><x-icon name="card" class="h-4 w-4" /></span> Mode de paiement</h2>
                     <div class="mt-5 space-y-3">
                         @foreach ($paymentMethods as $value => $gateway)
-                            <label class="flex cursor-pointer items-start gap-4 rounded-2xl border-2 border-ink-200 p-4 transition has-[:checked]:border-primary has-[:checked]:bg-primary-50/50">
-                                <input type="radio" name="payment_method" value="{{ $value }}" class="mt-1 h-4 w-4 border-ink-300 text-primary focus:ring-primary-600" @checked(old('payment_method', array_key_first($paymentMethods)) === $value)>
+                            <label class="flex cursor-pointer items-start gap-4 border-2 border-ink-200 p-4 transition has-[:checked]:border-ink-950 has-[:checked]:bg-ivory">
+                                <input type="radio" name="payment_method" value="{{ $value }}" class="mt-1 h-4 w-4 border-ink-300 text-primary focus:ring-accent" @checked(old('payment_method', array_key_first($paymentMethods)) === $value)>
                                 <span class="flex-1">
-                                    <span class="flex items-center gap-2 font-semibold text-ink-900"><x-icon name="cash" class="h-5 w-5 text-primary" /> {{ $gateway->method()->label() }}</span>
+                                    <span class="flex items-center gap-2 font-semibold text-ink-900"><x-icon name="cash" class="h-5 w-5 text-accent-600" /> {{ $gateway->method()->label() }}</span>
                                     <span class="mt-1 block text-sm text-ink-500">{{ $gateway->method()->description() }}</span>
                                 </span>
                             </label>
                         @endforeach
                         {{-- Emplacement prévu pour le paiement en ligne (Stripe) --}}
-                        <div class="flex items-start gap-4 rounded-2xl border-2 border-dashed border-ink-200 p-4 opacity-60">
+                        <div class="flex items-start gap-4 border-2 border-dashed border-ink-200 p-4 opacity-60">
                             <span class="mt-1 h-4 w-4 rounded-full border border-ink-300"></span>
                             <span>
                                 <span class="flex items-center gap-2 font-semibold text-ink-900"><x-icon name="card" class="h-5 w-5" /> Carte bancaire</span>
@@ -76,14 +76,14 @@
             </div>
 
             {{-- Récapitulatif --}}
-            <aside class="h-fit rounded-3xl bg-ink-50 p-6 lg:sticky lg:top-28">
+            <aside class="h-fit bg-ink-50 p-6 lg:sticky lg:top-28">
                 <h2 class="text-lg font-semibold">Votre commande</h2>
                 <ul class="mt-5 space-y-4">
                     @foreach ($cart->lines as $line)
                         <li class="flex items-center gap-3">
-                            <div class="relative h-16 w-14 shrink-0 overflow-hidden rounded-lg bg-white">
+                            <div class="relative h-16 w-14 shrink-0 overflow-hidden bg-white">
                                 <img src="{{ $line->product->image_url }}" alt="" class="h-full w-full object-cover">
-                                <span class="absolute -right-0 -top-0 flex h-5 min-w-5 items-center justify-center rounded-bl-lg bg-ink-900 px-1 text-[11px] font-bold text-white">{{ $line->quantity }}</span>
+                                <span class="absolute -right-0 -top-0 flex h-5 min-w-5 items-center justify-center  bg-ink-900 px-1 text-[11px] font-bold text-white">{{ $line->quantity }}</span>
                             </div>
                             <p class="flex-1 text-sm font-medium text-ink-900">{{ $line->product->name }}</p>
                             <p class="text-sm font-semibold">{{ format_mad($line->lineTotal) }}</p>
@@ -97,7 +97,7 @@
                 </dl>
 
                 <label class="mt-6 flex items-start gap-3 text-sm text-ink-600">
-                    <input type="checkbox" name="terms" value="1" class="mt-0.5 h-4 w-4 rounded border-ink-300 text-primary focus:ring-primary-600" @checked(old('terms'))>
+                    <input type="checkbox" name="terms" value="1" class="mt-0.5 h-4 w-4 rounded-none border-ink-300 text-primary focus:ring-accent" @checked(old('terms'))>
                     <span>J'accepte les <a href="{{ route('pages.cgv') }}" target="_blank" class="font-medium text-primary underline">conditions générales de vente</a>.</span>
                 </label>
                 @error('terms')<p class="mt-1.5 text-xs font-medium text-red-600">{{ $message }}</p>@enderror

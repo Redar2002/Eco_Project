@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
- * Génère des visuels produits « placeholder » en SVG, stockés sur le disque public.
+ * Génère des visuels « placeholder » en SVG, stockés sur le disque public.
+ * Deux ambiances : « light » (fond ivoire, produits) et « dark » (fond noir, collections).
  * Aucune dépendance réseau : idéal pour les seeders et la démo.
  */
 class PlaceholderImage
@@ -24,48 +25,40 @@ class PlaceholderImage
     /**
      * Crée un SVG et retourne son chemin relatif au disque « public ».
      */
-    public static function make(string $label, string $shape, string $color, string $directory = 'products'): string
+    public static function make(string $label, string $shape, string $color, string $directory = 'products', bool $dark = false): string
     {
-        $svg = self::svg($label, $shape, $color);
+        $svg = self::svg($label, $shape, $color, $dark);
         $path = trim($directory, '/').'/'.Str::slug($label).'-'.Str::lower(Str::random(6)).'.svg';
         Storage::disk('public')->put($path, $svg);
 
         return $path;
     }
 
-    public static function svg(string $label, string $shape, string $color): string
+    public static function svg(string $label, string $shape, string $color, bool $dark = false): string
     {
         $shapeSvg = self::SHAPES[$shape] ?? self::SHAPES['tshirt'];
-        $bg = self::tint($color, 0.88);
-        $bg2 = self::tint($color, 0.75);
-        $label = e(Str::limit($label, 28));
+        [$bg1, $bg2, $halo, $haloOpacity] = $dark
+            ? ['#1A1A1A', '#050505', '#C9A24B', '.10']
+            : ['#F8F5EF', '#E8E1D3', '#FFFFFF', '.55'];
+        $labelSvg = $dark ? '' : '<text x="400" y="910" text-anchor="middle" font-family="Georgia, serif" font-size="30" font-style="italic" fill="#0A0A0A" fill-opacity=".55">'.e(Str::limit($label, 30)).'</text>';
 
         return <<<SVG
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="{$bg}"/>
+      <stop offset="0" stop-color="{$bg1}"/>
       <stop offset="1" stop-color="{$bg2}"/>
     </linearGradient>
     <filter id="s" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#0f172a" flood-opacity=".18"/>
+      <feDropShadow dx="0" dy="22" stdDeviation="20" flood-color="#000" flood-opacity=".22"/>
     </filter>
   </defs>
   <rect width="800" height="1000" fill="url(#g)"/>
-  <circle cx="400" cy="470" r="300" fill="#ffffff" fill-opacity=".35"/>
+  <circle cx="400" cy="470" r="310" fill="{$halo}" fill-opacity="{$haloOpacity}"/>
+  <circle cx="400" cy="470" r="340" fill="none" stroke="#C9A24B" stroke-opacity=".35" stroke-width="1.5"/>
   <g transform="translate(160 230) scale(2.4)" fill="{$color}" filter="url(#s)">{$shapeSvg}</g>
-  <text x="400" y="900" text-anchor="middle" font-family="Poppins, Arial, sans-serif" font-size="34" font-weight="600" fill="#0f172a" fill-opacity=".72">{$label}</text>
+  {$labelSvg}
 </svg>
 SVG;
-    }
-
-    /** Éclaircit une couleur hexadécimale (ratio 0 = identique, 1 = blanc). */
-    private static function tint(string $hex, float $ratio): string
-    {
-        $hex = ltrim($hex, '#');
-        [$r, $g, $b] = array_map('hexdec', str_split($hex, 2));
-        $mix = fn (int $c) => (int) round($c + (255 - $c) * $ratio);
-
-        return sprintf('#%02x%02x%02x', $mix($r), $mix($g), $mix($b));
     }
 }

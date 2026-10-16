@@ -27,10 +27,10 @@
                 @if ($editing && $product->images->isNotEmpty())
                     <div class="mb-5 grid grid-cols-3 gap-3 sm:grid-cols-5">
                         @foreach ($product->images as $image)
-                            <div class="group relative aspect-[4/5] overflow-hidden rounded-xl bg-ink-100">
+                            <div class="group relative aspect-[4/5] overflow-hidden bg-ink-100">
                                 <img src="{{ $image->url }}" alt="" class="h-full w-full object-cover">
-                                @if ($loop->first)<span class="absolute left-2 top-2 rounded-full bg-ink-900/80 px-2 py-0.5 text-[10px] font-semibold text-white">Principale</span>@endif
-                                <button type="submit" form="delete-image-{{ $image->id }}" class="absolute right-2 top-2 rounded-full bg-white/90 p-1.5 text-red-600 opacity-100 shadow transition hover:bg-red-600 hover:text-white lg:opacity-0 lg:group-hover:opacity-100" aria-label="Supprimer l'image">
+                                @if ($loop->first)<span class="absolute left-2 top-2 bg-ink-900/80 px-2 py-0.5 text-[10px] font-semibold text-white">Principale</span>@endif
+                                <button type="submit" form="delete-image-{{ $image->id }}" class="absolute right-2 top-2 bg-white/90 p-1.5 text-red-600 opacity-100 shadow transition hover:bg-red-600 hover:text-white lg:opacity-0 lg:group-hover:opacity-100" aria-label="Supprimer l'image">
                                     <x-icon name="trash" class="h-4 w-4" />
                                 </button>
                             </div>
@@ -39,8 +39,8 @@
                 @endif
 
                 <div x-data="{ previews: [] }">
-                    <label for="images" class="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-ink-200 px-6 py-10 text-center transition hover:border-primary hover:bg-primary-50/40">
-                        <span class="flex h-12 w-12 items-center justify-center rounded-full bg-primary-50 text-primary"><x-icon name="photo" class="h-6 w-6" /></span>
+                    <label for="images" class="flex cursor-pointer flex-col items-center justify-center border-2 border-dashed border-ink-200 px-6 py-10 text-center transition hover:border-accent hover:bg-ivory">
+                        <span class="flex h-12 w-12 items-center justify-center rounded-full bg-accent-50 text-accent-700"><x-icon name="photo" class="h-6 w-6" /></span>
                         <span class="mt-3 text-sm font-semibold text-ink-900">Cliquez pour ajouter des images</span>
                         <span class="mt-1 text-xs text-ink-500">JPG, PNG ou WebP · 3 Mo max · 8 images max</span>
                     </label>
@@ -48,7 +48,7 @@
                            @change="previews = [...$event.target.files].map(f => URL.createObjectURL(f))">
                     <div x-show="previews.length" x-cloak class="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-5">
                         <template x-for="src in previews" :key="src">
-                            <img :src="src" alt="" class="aspect-[4/5] w-full rounded-xl object-cover ring-2 ring-primary/30">
+                            <img :src="src" alt="" class="aspect-[4/5] w-full object-cover ring-2 ring-accent/50">
                         </template>
                     </div>
                     @error('images')<p class="mt-2 text-xs font-medium text-red-600">{{ $message }}</p>@enderror
@@ -75,14 +75,14 @@
                             <span class="block text-sm font-medium text-ink-900">Actif</span>
                             <span class="text-xs text-ink-500">Visible dans la boutique</span>
                         </span>
-                        <input type="checkbox" name="is_active" value="1" @checked(old('is_active', $product->is_active)) class="mt-1 h-5 w-5 rounded border-ink-300 text-primary focus:ring-primary-600">
+                        <input type="checkbox" name="is_active" value="1" @checked(old('is_active', $product->is_active)) class="mt-1 h-5 w-5 rounded border-ink-300 text-primary focus:ring-accent">
                     </label>
                     <label class="flex items-start justify-between gap-4">
                         <span>
                             <span class="block text-sm font-medium text-ink-900">Mis en avant</span>
                             <span class="text-xs text-ink-500">Affiché dans « Les plus populaires »</span>
                         </span>
-                        <input type="checkbox" name="is_featured" value="1" @checked(old('is_featured', $product->is_featured)) class="mt-1 h-5 w-5 rounded border-ink-300 text-primary focus:ring-primary-600">
+                        <input type="checkbox" name="is_featured" value="1" @checked(old('is_featured', $product->is_featured)) class="mt-1 h-5 w-5 rounded border-ink-300 text-primary focus:ring-accent">
                     </label>
                 </div>
             </x-admin.card>

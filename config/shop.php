@@ -23,6 +23,9 @@ return [
     // Seuil « stock faible » pour le back-office
     'low_stock_threshold' => 5,
 
+    // Adresse qui reçoit une alerte à chaque nouvelle commande (vide = désactivé)
+    'admin_email' => env('SHOP_ADMIN_EMAIL'),
+
     'contact' => [
         'email' => 'contact@tirrainstyle.ma',
         'phone' => '+212 5 22 00 00 00',

@@ -6,13 +6,13 @@
             </div>
             <h1 class="mt-6 text-3xl font-bold tracking-tight sm:text-4xl">Merci pour votre commande !</h1>
             <p class="mt-3 text-ink-500">Votre commande a bien été enregistrée. Notre équipe vous appellera au <strong class="text-ink-900">{{ $order->phone }}</strong> pour la confirmer.</p>
-            <div class="mt-6 inline-flex flex-col items-center rounded-2xl border border-dashed border-primary-200 bg-primary-50 px-8 py-4">
-                <span class="text-xs font-semibold uppercase tracking-wider text-primary-700">Numéro de commande</span>
-                <span class="mt-1 font-display text-2xl font-bold tracking-wide text-primary">{{ $order->number }}</span>
+            <div class="mt-6 inline-flex flex-col items-center border border-accent-300 bg-ivory px-8 py-4">
+                <span class="text-xs font-semibold uppercase tracking-wider text-accent-700">Numéro de commande</span>
+                <span class="mt-1 font-display text-3xl tracking-wide text-ink-950">{{ $order->number }}</span>
             </div>
         </div>
 
-        <div class="mt-12 overflow-hidden rounded-3xl border border-ink-100">
+        <div class="mt-12 overflow-hidden border border-ink-100">
             <div class="grid gap-6 bg-ink-50 p-6 text-sm sm:grid-cols-3">
                 <div>
                     <p class="text-ink-500">Livraison à</p>

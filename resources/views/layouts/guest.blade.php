@@ -10,7 +10,7 @@
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -18,19 +18,19 @@
         {{-- Écran d'authentification en deux colonnes : visuel de marque + formulaire --}}
         <div class="grid min-h-screen lg:grid-cols-2">
             <div class="relative hidden overflow-hidden bg-primary-950 lg:block">
-                <div class="absolute -left-24 top-1/4 h-96 w-96 rounded-full bg-primary-600/40 blur-3xl"></div>
+                <div class="absolute -left-24 top-1/4 h-96 w-96 rounded-full bg-accent/10 blur-3xl"></div>
                 <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-accent/20 blur-3xl"></div>
                 <div class="relative flex h-full flex-col justify-between p-12 text-white">
                     <a href="{{ route('home') }}"><x-application-logo light /></a>
                     <div>
                         <p class="font-display text-4xl font-bold leading-tight">Rejoignez la communauté<br><span class="text-accent">TirrainStyle.</span></p>
-                        <ul class="mt-8 space-y-4 text-primary-100">
+                        <ul class="mt-8 space-y-4 text-ink-300">
                             <li class="flex items-center gap-3"><x-icon name="clipboard" class="text-accent" /> Suivez vos commandes en temps réel</li>
                             <li class="flex items-center gap-3"><x-icon name="sparkles" class="text-accent" /> Accédez aux ventes privées</li>
                             <li class="flex items-center gap-3"><x-icon name="truck" class="text-accent" /> Commandez plus vite grâce à vos infos enregistrées</li>
                         </ul>
                     </div>
-                    <p class="text-sm text-primary-200/60">&copy; {{ date('Y') }} TirrainStyle</p>
+                    <p class="text-sm text-ink-500">&copy; {{ date('Y') }} TirrainStyle</p>
                 </div>
             </div>
 

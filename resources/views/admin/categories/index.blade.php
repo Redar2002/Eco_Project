@@ -5,8 +5,8 @@
 
     <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         @forelse ($categories as $category)
-            <div class="flex gap-4 rounded-2xl bg-white p-4 shadow-soft ring-1 ring-ink-900/5">
-                <div class="h-24 w-20 shrink-0 overflow-hidden rounded-xl bg-ink-100">
+            <div class="flex gap-4 bg-white p-4 shadow-soft ring-1 ring-ink-900/5">
+                <div class="h-24 w-20 shrink-0 overflow-hidden bg-ink-100">
                     @if ($category->image_url)<img src="{{ $category->image_url }}" alt="" class="h-full w-full object-cover">@endif
                 </div>
                 <div class="flex min-w-0 flex-1 flex-col">
@@ -19,7 +19,7 @@
                     </div>
                     <p class="mt-1 text-sm text-ink-600">{{ $category->products_count }} {{ Str::plural('produit', $category->products_count) }}</p>
                     <div class="mt-auto flex justify-end gap-1">
-                        <a href="{{ route('admin.categories.edit', $category) }}" class="inline-flex rounded-lg p-2 text-ink-500 hover:bg-ink-100 hover:text-ink-900" aria-label="Modifier"><x-icon name="pencil" class="h-4 w-4" /></a>
+                        <a href="{{ route('admin.categories.edit', $category) }}" class="inline-flex p-2 text-ink-500 hover:bg-ink-100 hover:text-ink-900" aria-label="Modifier"><x-icon name="pencil" class="h-4 w-4" /></a>
                         <x-confirm-delete :action="route('admin.categories.destroy', $category)" :name="'delete-category-'.$category->id" icon-only
                                           title="Supprimer cette catégorie ?" message="Une catégorie ne peut être supprimée que si elle ne contient aucun produit." />
                     </div>

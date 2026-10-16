@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function __invoke(): View
     {
-        $base = Product::active()->with('mainImage', 'category');
+        $base = Product::active()->with('images', 'category');
 
         return view('home', [
             'categories' => Category::where('is_featured', true)->ordered()

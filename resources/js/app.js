@@ -5,6 +5,24 @@ window.Alpine = Alpine;
 const csrf = () => document.querySelector('meta[name="csrf-token"]')?.content;
 
 document.addEventListener('alpine:init', () => {
+    /**
+     * x-reveal : fait apparaître un élément en fondu lorsqu'il entre dans l'écran.
+     * Usage : <div x-data x-reveal> ou x-reveal="150" pour un délai en ms.
+     */
+    Alpine.directive('reveal', (el, { expression }) => {
+        el.classList.add('reveal');
+        if (expression) el.style.transitionDelay = `${parseInt(expression, 10)}ms`;
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    el.classList.add('is-visible');
+                    observer.unobserve(el);
+                }
+            });
+        }, { threshold: 0.12 });
+        observer.observe(el);
+    });
+
     // Compteur du panier partagé entre le header et les boutons « Ajouter »
     Alpine.store('cart', {
         count: Number(document.querySelector('meta[name="cart-count"]')?.content || 0),

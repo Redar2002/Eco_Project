@@ -6,6 +6,7 @@ use App\Enums\PaymentMethod;
 use App\Http\Requests\CheckoutRequest;
 use App\Models\Order;
 use App\Services\Cart\CartService;
+use App\Services\OrderNotifier;
 use App\Services\OrderService;
 use App\Services\Payment\PaymentManager;
 use Illuminate\Http\RedirectResponse;
@@ -35,7 +36,7 @@ class CheckoutController extends Controller
         ]);
     }
 
-    public function store(CheckoutRequest $request, OrderService $orders): RedirectResponse
+    public function store(CheckoutRequest $request, OrderService $orders, OrderNotifier $notifier): RedirectResponse
     {
         try {
             $order = $orders->place($request->validated(), $request->user());
@@ -48,6 +49,9 @@ class CheckoutController extends Controller
             ->process($order);
 
         $this->cart->clear();
+
+        // E-mail de confirmation au client (+ alerte boutique)
+        $notifier->orderPlaced($order);
 
         // Mémorise la commande en session pour autoriser l'accès à la confirmation (invités)
         $request->session()->push('placed_orders', $order->number);

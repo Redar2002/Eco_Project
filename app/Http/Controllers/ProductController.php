@@ -17,7 +17,7 @@ class ProductController extends Controller
         $filters = $request->filters();
 
         $products = Product::active()
-            ->with('mainImage', 'category')
+            ->with('images', 'category')
             ->filter($filters)
             ->paginate(12)
             ->withQueryString();
@@ -46,7 +46,7 @@ class ProductController extends Controller
         $product->load('images', 'category');
 
         $similar = Product::active()
-            ->with('mainImage', 'category')
+            ->with('images', 'category')
             ->where('category_id', $product->category_id)
             ->whereKeyNot($product->id)
             ->inRandomOrder()

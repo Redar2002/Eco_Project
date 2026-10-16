@@ -7,6 +7,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\OrderTrackingController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -36,6 +37,13 @@ Route::controller(CheckoutController::class)->prefix('commande')->name('checkout
     Route::get('/', 'index')->name('index');
     Route::post('/', 'store')->middleware('throttle:10,1')->name('store');
     Route::get('/confirmation/{order}', 'success')->name('success');
+});
+
+// Suivi de commande (sans compte : numéro + téléphone, ou lien signé reçu par e-mail)
+Route::controller(OrderTrackingController::class)->prefix('suivi-commande')->name('orders.track.')->group(function () {
+    Route::get('/', 'create')->name('create');
+    Route::post('/', 'lookup')->middleware('throttle:10,1')->name('lookup');
+    Route::get('/{order}', 'show')->name('show');
 });
 
 // Pages statiques

@@ -1,7 +1,7 @@
 {{-- Bouton de suppression avec fenêtre modale de confirmation --}}
 @props(['action', 'name', 'title' => 'Confirmer la suppression', 'message' => 'Cette action est irréversible.', 'label' => 'Supprimer', 'iconOnly' => false])
 <button type="button" x-data @click.prevent="$dispatch('open-modal', '{{ $name }}')"
-        {{ $attributes->merge(['class' => $iconOnly ? 'inline-flex rounded-lg p-2 text-ink-500 transition hover:bg-red-50 hover:text-red-600' : 'inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50']) }}
+        {{ $attributes->merge(['class' => $iconOnly ? 'inline-flex p-2 text-ink-500 transition hover:bg-red-50 hover:text-red-600' : 'inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50']) }}
         aria-label="{{ $label }}">
     <x-icon name="trash" class="h-4 w-4" /> @unless ($iconOnly){{ $label }}@endunless
 </button>

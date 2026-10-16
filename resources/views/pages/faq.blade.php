@@ -26,12 +26,12 @@ $sections = [
     <section class="container-shop mt-16 max-w-3xl">
         @foreach ($sections as $section => $items)
             <h2 class="mb-4 mt-12 text-xl font-semibold first:mt-0">{{ $section }}</h2>
-            <div class="divide-y divide-ink-100 rounded-3xl border border-ink-100">
+            <div class="divide-y divide-ink-100 border border-ink-100">
                 @foreach ($items as [$question, $answer])
                     <div x-data="{ open: false }">
-                        <button type="button" @click="open = !open" :aria-expanded="open" class="flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-medium text-ink-900 transition hover:text-primary">
+                        <button type="button" @click="open = !open" :aria-expanded="open" class="flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-medium text-ink-900 transition hover:text-accent-700">
                             {{ $question }}
-                            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ink-50 transition" :class="open && 'rotate-45 bg-primary text-white'"><x-icon name="plus" class="h-4 w-4" /></span>
+                            <span class="flex h-7 w-7 shrink-0 items-center justify-center bg-ink-50 transition" :class="open && 'rotate-45 bg-ink-950 text-accent'"><x-icon name="plus" class="h-4 w-4" /></span>
                         </button>
                         <div x-show="open" x-cloak x-transition.opacity class="px-6 pb-5 text-ink-600">{{ $answer }}</div>
                     </div>
@@ -39,7 +39,7 @@ $sections = [
             </div>
         @endforeach
 
-        <div class="mt-16 rounded-3xl bg-ink-50 p-8 text-center">
+        <div class="mt-16 bg-ink-50 p-8 text-center">
             <h2 class="text-xl font-semibold">Vous n'avez pas trouvé votre réponse ?</h2>
             <p class="mt-2 text-ink-500">Notre équipe est là pour vous aider.</p>
             <x-button :href="route('pages.contact')" class="mt-6" icon="chat">Nous contacter</x-button>

@@ -38,9 +38,9 @@
                             <tr class="transition hover:bg-ink-50/60">
                                 <td class="px-5 py-3">
                                     <div class="flex items-center gap-3">
-                                        <img src="{{ $product->image_url }}" alt="" class="h-12 w-10 shrink-0 rounded-lg bg-ink-100 object-cover">
+                                        <img src="{{ $product->image_url }}" alt="" class="h-12 w-10 shrink-0 bg-ink-100 object-cover">
                                         <div class="min-w-0">
-                                            <a href="{{ route('admin.products.edit', $product) }}" class="font-semibold text-ink-900 hover:text-primary">{{ $product->name }}</a>
+                                            <a href="{{ route('admin.products.edit', $product) }}" class="font-semibold text-ink-900 hover:text-accent-700">{{ $product->name }}</a>
                                             @if ($product->is_featured)<p class="text-xs text-accent-600">★ Mis en avant</p>@endif
                                         </div>
                                     </div>
@@ -64,9 +64,9 @@
                                 </td>
                                 <td class="whitespace-nowrap px-5 py-3 text-right">
                                     @if ($product->is_active)
-                                        <a href="{{ route('products.show', $product) }}" target="_blank" class="inline-flex rounded-lg p-2 text-ink-500 hover:bg-ink-100 hover:text-ink-900" aria-label="Voir sur la boutique"><x-icon name="eye" class="h-4 w-4" /></a>
+                                        <a href="{{ route('products.show', $product) }}" target="_blank" class="inline-flex p-2 text-ink-500 hover:bg-ink-100 hover:text-ink-900" aria-label="Voir sur la boutique"><x-icon name="eye" class="h-4 w-4" /></a>
                                     @endif
-                                    <a href="{{ route('admin.products.edit', $product) }}" class="inline-flex rounded-lg p-2 text-ink-500 hover:bg-ink-100 hover:text-ink-900" aria-label="Modifier"><x-icon name="pencil" class="h-4 w-4" /></a>
+                                    <a href="{{ route('admin.products.edit', $product) }}" class="inline-flex p-2 text-ink-500 hover:bg-ink-100 hover:text-ink-900" aria-label="Modifier"><x-icon name="pencil" class="h-4 w-4" /></a>
                                     <x-confirm-delete :action="route('admin.products.destroy', $product)" :name="'delete-product-'.$product->id" icon-only
                                                       title="Supprimer ce produit ?" :message="'« '.$product->name.' » sera définitivement supprimé. Les commandes passées restent conservées.'" />
                                 </td>

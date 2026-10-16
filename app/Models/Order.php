@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\URL;
 
 class Order extends Model
 {
@@ -52,6 +53,15 @@ class Order extends Model
     public function scopeCountable(Builder $query): Builder
     {
         return $query->where('status', '!=', OrderStatus::Cancelled->value);
+    }
+
+    /**
+     * Lien de suivi sécurisé (signé) envoyé par e-mail : il donne accès au suivi
+     * de cette commande sans connexion, et ne peut pas être deviné.
+     */
+    public function trackingUrl(): string
+    {
+        return URL::signedRoute('orders.track.show', $this);
     }
 
     /**

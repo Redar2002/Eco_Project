@@ -1,6 +1,6 @@
 # TirrainStyle — Boutique e-commerce Laravel
 
-Boutique en ligne de mode streetwear pour le marché marocain : prix en dirhams (format « 1 299,00 MAD »), paiement à la livraison et interface entièrement en français.
+Boutique en ligne de mode streetwear haut de gamme (charte **Noir, Blanc, Or et Rouge**) pour le marché marocain : prix en dirhams (format « 1 299,00 MAD »), paiement à la livraison et interface entièrement en français.
 
 **Stack :** Laravel 13 · PHP 8.2+ · Blade · Tailwind CSS 3 · Alpine.js · Vite · SQLite (MySQL possible) · Laravel Breeze
 
@@ -19,7 +19,9 @@ Les autres captures sont dans [`docs/captures`](docs/captures) : catalogue, fich
 - **Catalogue** (`/boutique`) : grille paginée, filtres par catégorie, prix min/max et promotions, tri (nouveautés, prix, nom), recherche par nom, filtres actifs supprimables.
 - **Fiche produit** : galerie avec miniatures et zoom plein écran, prix barré en cas de promo, indicateur de stock, sélecteur de quantité, ajout au panier en AJAX avec notification, produits similaires.
 - **Panier en session** : modification des quantités, suppression, sous-total, frais de livraison (gratuits au-delà d'un seuil) et barre de progression.
-- **Commande** : formulaire (nom, téléphone marocain, ville, adresse), paiement à la livraison, page de confirmation avec numéro de commande (`TS-AAAAMMJJ-XXXXX`).
+- **Commande** : formulaire (nom, téléphone marocain, e-mail, ville, adresse), paiement à la livraison, page de confirmation avec numéro de commande (`TS-AAAAMMJJ-XXXXX`).
+- **E-mails automatiques** : confirmation envoyée au client dès la validation, e-mail à chaque changement de statut (confirmée, expédiée, livrée, annulée), alerte optionnelle à la boutique.
+- **Suivi de commande** (`/suivi-commande`) : sans compte, avec le numéro de commande et le téléphone, ou en un clic grâce au lien sécurisé (signé) présent dans les e-mails.
 - **Espace client** : inscription, connexion, tableau de bord, historique des commandes avec frise de suivi, profil.
 - **Pages statiques** : À propos, Contact (formulaire validé avec protection anti-spam), FAQ, CGV, pages d'erreur 403, 404, 419 et 500.
 
@@ -79,9 +81,38 @@ Pour réinitialiser les données : `php artisan migrate:fresh --seed`. Les image
 php artisan test
 ```
 
-45 tests couvrent : panier, prix recalculés côté serveur, transaction de commande et stock, accès privé aux commandes, contrôle d'accès admin, CRUD, upload d'images, formulaires de contact et de newsletter, authentification Breeze.
+51 tests couvrent : panier, prix recalculés côté serveur, transaction de commande et stock, accès privé aux commandes, contrôle d'accès admin, CRUD, upload d'images, e-mails de commande, suivi de commande, formulaires de contact et de newsletter, authentification Breeze.
 
 ---
+
+## E-mails (confirmation et suivi de commande)
+
+Par défaut (`MAIL_MAILER=log`), les e-mails ne partent pas : leur contenu est écrit dans `storage/logs/laravel.log`, ce qui est pratique pour tester.
+
+Pour envoyer de vrais e-mails, renseignez un serveur SMTP dans `.env`. Exemple avec Gmail (créez d'abord un « mot de passe d'application » dans votre compte Google, rubrique Sécurité) :
+
+```dotenv
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=votre.adresse@gmail.com
+MAIL_PASSWORD="mot de passe d'application"
+MAIL_FROM_ADDRESS="votre.adresse@gmail.com"
+MAIL_FROM_NAME="TirrainStyle"
+
+# Facultatif : recevoir une alerte pour chaque nouvelle commande
+SHOP_ADMIN_EMAIL=votre.adresse@gmail.com
+```
+
+Puis lancez `php artisan config:clear`. Pour tester sans envoyer de vrais e-mails, [Mailtrap](https://mailtrap.io) fournit une boîte de réception de test gratuite.
+
+| Événement | E-mail envoyé |
+|---|---|
+| Le client valide sa commande | Confirmation au client, avec récapitulatif et bouton « Suivre ma commande » |
+| Nouvelle commande | Alerte à `SHOP_ADMIN_EMAIL` (si renseignée) |
+| L'admin change le statut | Information au client (case « Prévenir le client par e-mail », cochée par défaut) |
+
+Un échec d'envoi (SMTP indisponible…) ne bloque jamais la commande : l'erreur est simplement journalisée. Les modèles d'e-mails sont dans `resources/views/emails/`.
 
 ## Passer à MySQL
 
@@ -118,10 +149,12 @@ app/
 │   ├── Controllers/       Contrôleurs fins (boutique, Account/, Admin/)
 │   ├── Middleware/        EnsureUserIsAdmin (alias « admin »)
 │   └── Requests/          Validation (Checkout, Contact, Admin/Product…)
+├── Mail/                  OrderConfirmed, OrderStatusUpdated, NewOrderAdmin
 ├── Models/                User, Category, Product, ProductImage, Order, OrderItem…
 ├── Services/
 │   ├── Cart/CartService   Panier en session (ids + quantités uniquement)
 │   ├── OrderService       Création de commande en transaction + gestion du stock
+│   ├── OrderNotifier      Envoi des e-mails de commande (sans jamais bloquer la commande)
 │   └── Payment/           PaymentGateway, CashOnDeliveryGateway, PaymentManager
 ├── Support/PlaceholderImage  Génération des visuels SVG de démo
 └── helpers.php            format_mad()
