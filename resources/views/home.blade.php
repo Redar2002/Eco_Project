@@ -29,25 +29,35 @@
                     </dl>
                 </div>
 
-                {{-- Collage de produits --}}
-                @if ($popular->count() >= 3)
-                    <div class="relative hidden h-[30rem] lg:block">
-                        <a href="{{ route('products.show', $popular[0]) }}" class="absolute right-0 top-0 h-[26rem] w-64 overflow-hidden rounded-3xl shadow-2xl ring-1 ring-white/10 transition duration-500 hover:-translate-y-2">
-                            <img src="{{ $popular[0]->image_url }}" alt="{{ $popular[0]->name }}" class="h-full w-full object-cover">
-                        </a>
-                        <a href="{{ route('products.show', $popular[1]) }}" class="absolute bottom-0 left-8 h-72 w-52 overflow-hidden rounded-3xl shadow-2xl ring-1 ring-white/10 transition duration-500 hover:-translate-y-2">
-                            <img src="{{ $popular[1]->image_url }}" alt="{{ $popular[1]->name }}" class="h-full w-full object-cover">
-                        </a>
-                        <div class="absolute bottom-10 right-10 flex items-center gap-3 rounded-2xl bg-white p-3 pr-5 text-ink-900 shadow-lift">
-                            <img src="{{ $popular[2]->image_url }}" alt="" class="h-14 w-12 rounded-lg object-cover">
+                {{-- Collage photo (images dans public/images/hero) --}}
+                <div class="relative hidden h-[30rem] lg:block">
+                    <a href="{{ route('products.index', ['categorie' => 't-shirts']) }}" class="absolute right-0 top-0 h-[26rem] w-64 overflow-hidden rounded-3xl shadow-2xl ring-1 ring-white/10 transition duration-500 hover:-translate-y-2">
+                        <img src="{{ asset('images/hero/look-tshirt.webp') }}" alt="Look t-shirt raglan et jean" class="h-full w-full object-cover object-top">
+                    </a>
+                    <a href="{{ route('products.index', ['categorie' => 'sweats-hoodies']) }}" class="absolute bottom-0 left-8 h-72 w-60 overflow-hidden rounded-3xl shadow-2xl ring-1 ring-white/10 transition duration-500 hover:-translate-y-2">
+                        <img src="{{ asset('images/hero/look-hoodie.jpg') }}" alt="Ensemble hoodie et jogging gris" class="h-full w-full object-cover">
+                    </a>
+                    @if ($popular->isNotEmpty())
+                        <a href="{{ route('products.show', $popular[0]) }}" class="absolute left-0 top-16 flex items-center gap-3 rounded-2xl bg-white p-3 pr-5 text-ink-900 shadow-lift transition hover:-translate-y-1">
+                            <img src="{{ $popular[0]->image_url }}" alt="" class="h-14 w-12 rounded-lg object-cover">
                             <div>
                                 <p class="text-xs text-ink-500">Best-seller</p>
-                                <p class="text-sm font-semibold">{{ $popular[2]->name }}</p>
-                                <p class="text-sm font-bold text-primary">{{ format_mad($popular[2]->current_price) }}</p>
+                                <p class="text-sm font-semibold">{{ $popular[0]->name }}</p>
+                                <p class="text-sm font-bold text-primary">{{ format_mad($popular[0]->current_price) }}</p>
                             </div>
-                        </div>
-                    </div>
-                @endif
+                        </a>
+                    @endif
+                </div>
+
+                {{-- Version mobile : les deux photos côte à côte --}}
+                <div class="grid grid-cols-2 gap-3 lg:hidden">
+                    <a href="{{ route('products.index', ['categorie' => 't-shirts']) }}" class="aspect-[3/4] overflow-hidden rounded-2xl ring-1 ring-white/10">
+                        <img src="{{ asset('images/hero/look-tshirt.webp') }}" alt="Look t-shirt raglan et jean" class="h-full w-full object-cover object-top">
+                    </a>
+                    <a href="{{ route('products.index', ['categorie' => 'sweats-hoodies']) }}" class="aspect-[3/4] overflow-hidden rounded-2xl ring-1 ring-white/10">
+                        <img src="{{ asset('images/hero/look-hoodie.jpg') }}" alt="Ensemble hoodie et jogging gris" class="h-full w-full object-cover">
+                    </a>
+                </div>
             </div>
         </div>
     </section>
