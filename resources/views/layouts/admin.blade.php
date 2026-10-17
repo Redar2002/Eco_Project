@@ -21,8 +21,10 @@
             ['admin.products.index', 'admin.products.*', 'cube', 'Produits'],
             ['admin.categories.index', 'admin.categories.*', 'grid', 'Catégories'],
             ['admin.customers.index', 'admin.customers.*', 'users', 'Clients'],
+            ['admin.messages.index', 'admin.messages.*', 'mail', 'Messages'],
         ];
         $pendingCount = \App\Models\Order::where('status', \App\Enums\OrderStatus::Pending)->count();
+        $unreadMessages = \App\Models\ContactMessage::unread()->count();
     @endphp
     <body class="bg-ink-50" x-data="{ sidebar: false }">
         {{-- Barre latérale --}}
@@ -46,6 +48,9 @@
                         <span class="flex-1">{{ $label }}</span>
                         @if ($route === 'admin.orders.index' && $pendingCount > 0)
                             <span class="rounded-full bg-accent px-2 py-0.5 text-[11px] font-bold text-ink-900">{{ $pendingCount }}</span>
+                        @endif
+                        @if ($route === 'admin.messages.index' && $unreadMessages > 0)
+                            <span class="rounded-full bg-accent px-2 py-0.5 text-[11px] font-bold text-ink-900">{{ $unreadMessages }}</span>
                         @endif
                     </a>
                 @endforeach

@@ -26,6 +26,10 @@ return [
     // Adresse qui reçoit une alerte à chaque nouvelle commande (vide = désactivé)
     'admin_email' => env('SHOP_ADMIN_EMAIL'),
 
+    // Adresse qui reçoit les messages du formulaire de contact.
+    // Par défaut : SHOP_ADMIN_EMAIL, sinon l'adresse d'envoi (MAIL_FROM_ADDRESS).
+    'contact_inbox' => env('SHOP_CONTACT_INBOX', env('SHOP_ADMIN_EMAIL', env('MAIL_FROM_ADDRESS'))),
+
     'contact' => [
         'email' => 'contact@tirrainstyle.ma',
         'phone' => '+212 5 22 00 00 00',

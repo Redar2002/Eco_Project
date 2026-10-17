@@ -9,13 +9,7 @@
                 <x-input name="name" label="Nom complet" :value="auth()->user()?->name" required autocomplete="name" />
                 <x-input name="email" type="email" label="Adresse e-mail" :value="auth()->user()?->email" required autocomplete="email" />
                 <x-input name="phone" type="tel" label="Téléphone (facultatif)" autocomplete="tel" />
-                <x-select name="subject" label="Sujet" required placeholder="Choisir un sujet…" :options="[
-                    'commande' => 'Suivi de commande',
-                    'produit' => 'Question sur un produit',
-                    'retour' => 'Retour / échange',
-                    'partenariat' => 'Partenariat',
-                    'autre' => 'Autre',
-                ]" />
+                <x-select name="subject" label="Sujet" required placeholder="Choisir un sujet…" :options="\App\Models\ContactMessage::SUBJECTS" />
                 <x-textarea name="message" label="Message" rows="6" required class="sm:col-span-2" placeholder="Comment pouvons-nous vous aider ?" />
                 {{-- Champ piège anti-spam, invisible pour les humains --}}
                 <div class="hidden" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>

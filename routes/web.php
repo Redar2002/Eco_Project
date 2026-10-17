@@ -95,6 +95,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('commandes/{order}/confirmation', [Admin\OrderController::class, 'resendConfirmation'])->name('orders.confirmation');
 
     Route::get('clients', [Admin\CustomerController::class, 'index'])->name('customers.index');
+
+    // Messages du formulaire de contact
+    Route::resource('messages', Admin\ContactMessageController::class)->only(['index', 'show', 'destroy']);
+    Route::patch('messages/{message}/non-lu', [Admin\ContactMessageController::class, 'markUnread'])->name('messages.unread');
 });
 
 require __DIR__.'/auth.php';

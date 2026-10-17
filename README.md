@@ -23,7 +23,7 @@ Les autres captures sont dans [`docs/captures`](docs/captures) : catalogue, fich
 - **E-mails automatiques** : confirmation envoyée au client dès la validation, e-mail à chaque changement de statut (confirmée, expédiée, livrée, annulée), alerte optionnelle à la boutique.
 - **Suivi de commande** (`/suivi-commande`) : sans compte, avec le numéro de commande et le téléphone, ou en un clic grâce au lien sécurisé (signé) présent dans les e-mails.
 - **Espace client** : inscription, connexion, tableau de bord, historique des commandes avec frise de suivi, profil.
-- **Pages statiques** : À propos, Contact (formulaire validé avec protection anti-spam), FAQ, CGV, pages d'erreur 403, 404, 419 et 500.
+- **Pages statiques** : À propos, Contact (formulaire validé avec protection anti-spam, messages transmis par e-mail et visibles dans l'admin), FAQ, CGV, pages d'erreur 403, 404, 419 et 500.
 
 ### Back-office (`/admin`, rôle admin uniquement)
 - **Tableau de bord** : chiffre d'affaires, commandes, clients, ruptures, graphique des ventes sur 14 jours, meilleures ventes, dernières commandes, stocks faibles.
@@ -31,6 +31,7 @@ Les autres captures sont dans [`docs/captures`](docs/captures) : catalogue, fich
 - **Catégories** : CRUD avec image, position et mise en vedette.
 - **Commandes** : liste filtrable (statut, recherche, dates), détail, changement de statut (en attente, confirmée, expédiée, livrée, annulée). Une annulation remet le stock.
 - **Clients** : liste avec nombre de commandes et total dépensé.
+- **Messages** : messages reçus via le formulaire de contact (non-lus, recherche, réponse).
 
 ---
 
@@ -139,6 +140,14 @@ Après toute modification de `.env` : `php artisan config:clear`.
 |---|---|
 | Commande enregistrée | Confirmation au client (une seule fois) + alerte à `SHOP_ADMIN_EMAIL` si renseignée |
 | Changement de statut par l'admin | Information au client (case « Prévenir le client par e-mail ») |
+
+## Messages du formulaire de contact
+
+Chaque message envoyé depuis `/contact` est :
+1. **enregistré** dans la table `contact_messages` et consultable dans le back-office, menu **Messages** (compteur de non-lus, recherche, réponse par e-mail ou WhatsApp, suppression) ;
+2. **transmis par e-mail** à la boutique : à `SHOP_CONTACT_INBOX`, sinon `SHOP_ADMIN_EMAIL`, sinon `MAIL_FROM_ADDRESS`. « Répondre » dans votre messagerie écrit directement au client.
+
+Si l'e-mail ne peut pas partir, le message reste disponible dans le back-office (l'erreur est journalisée).
 
 ## Passer à MySQL
 
