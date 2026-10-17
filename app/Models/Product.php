@@ -91,8 +91,10 @@ class Product extends Model
         return $query
             ->when($filters['q'] ?? null, fn (Builder $q, $search) => $q->where('name', 'like', '%'.$search.'%'))
             ->when($filters['categorie'] ?? null, fn (Builder $q, $slug) => $q->whereHas('category', fn (Builder $c) => $c->where('slug', $slug)))
-            ->when(is_numeric($filters['min'] ?? null), fn (Builder $q) => $q->whereRaw("$effective >= ?", [(float) $filters['min']]))
-            ->when(is_numeric($filters['max'] ?? null), fn (Builder $q) => $q->whereRaw("$effective <= ?", [(float) $filters['max']]))
+            // CAST explicite : sous SQLite, la valeur liée arrive en texte et serait comparée
+            // comme une chaîne (aucun résultat avec un minimum). Fonctionne aussi sous MySQL.
+            ->when(is_numeric($filters['min'] ?? null), fn (Builder $q) => $q->whereRaw("$effective >= CAST(? AS DECIMAL(10,2))", [$filters['min']]))
+            ->when(is_numeric($filters['max'] ?? null), fn (Builder $q) => $q->whereRaw("$effective <= CAST(? AS DECIMAL(10,2))", [$filters['max']]))
             ->when($filters['promo'] ?? null, fn (Builder $q) => $q->whereNotNull('sale_price'))
             ->tap(fn (Builder $q) => match ($filters['tri'] ?? 'nouveautes') {
                 'prix-asc' => $q->orderByRaw("$effective asc"),
