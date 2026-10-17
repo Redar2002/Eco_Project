@@ -32,9 +32,9 @@ return [
 
     'contact' => [
         'email' => 'contact@tirrainstyle.ma',
-        'phone' => '+212 5 22 00 00 00',
-        'whatsapp' => '+212 6 00 00 00 00',
-        'address' => 'Bd Anfa, Casablanca, Maroc',
+        'phone' => '+212 6 75 57 87 20',
+        'whatsapp' => '+212 6 75 57 87 20',
+        'address' => 'Hay El Maghreb El Arabi, Témara, Maroc',
     ],
 
     // Villes proposées au checkout (champ libre accepté aussi)
