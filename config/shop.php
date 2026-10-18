@@ -1,0 +1,45 @@
+<?php
+
+/*
+| Paramètres de la boutique TirrainStyle.
+| Les montants sont exprimés en dirhams marocains (MAD).
+*/
+
+return [
+    'name' => env('APP_NAME', 'TirrainStyle'),
+
+    'currency' => 'MAD',
+
+    // Frais de livraison standard et seuil de gratuité
+    'shipping_fee' => (float) env('SHOP_SHIPPING_FEE', 35),
+    'free_shipping_threshold' => (float) env('SHOP_FREE_SHIPPING_THRESHOLD', 500),
+
+    // Quantité maximale d'un même article dans le panier
+    'max_quantity_per_item' => 10,
+
+    // Un produit est « Nouveau » s'il a été ajouté il y a moins de N jours
+    'new_product_days' => 30,
+
+    // Seuil « stock faible » pour le back-office
+    'low_stock_threshold' => 5,
+
+    // Adresse qui reçoit une alerte à chaque nouvelle commande (vide = désactivé)
+    'admin_email' => env('SHOP_ADMIN_EMAIL'),
+
+    // Adresse qui reçoit les messages du formulaire de contact.
+    // Par défaut : SHOP_ADMIN_EMAIL, sinon l'adresse d'envoi (MAIL_FROM_ADDRESS).
+    'contact_inbox' => env('SHOP_CONTACT_INBOX', env('SHOP_ADMIN_EMAIL', env('MAIL_FROM_ADDRESS'))),
+
+    'contact' => [
+        'email' => 'contact@tirrainstyle.ma',
+        'phone' => '+212 6 75 57 87 20',
+        'whatsapp' => '+212 6 75 57 87 20',
+        'address' => 'Hay El Maghreb El Arabi, Témara, Maroc',
+    ],
+
+    // Villes proposées au checkout (champ libre accepté aussi)
+    'cities' => [
+        'Casablanca', 'Rabat', 'Marrakech', 'Fès', 'Tanger', 'Agadir', 'Meknès',
+        'Oujda', 'Kénitra', 'Tétouan', 'Salé', 'El Jadida', 'Nador', 'Béni Mellal', 'Laâyoune',
+    ],
+];
