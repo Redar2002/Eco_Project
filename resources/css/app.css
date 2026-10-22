@@ -49,6 +49,103 @@
     }
 }
 
+/* ===== Fond animé « aurore » (bannière d'accueil) ===== */
+@layer components {
+    .aurora {
+        background:
+            radial-gradient(120% 80% at 100% 0%, rgba(30, 58, 138, 0.9) 0%, transparent 60%),
+            radial-gradient(90% 70% at 0% 100%, rgba(15, 23, 42, 1) 0%, transparent 70%),
+            linear-gradient(135deg, #070d24 0%, #0f1d4a 55%, #172554 100%);
+    }
+
+    .aurora-blob {
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(60px);
+        mix-blend-mode: screen;
+        will-change: transform;
+    }
+
+    .aurora-blob-1 {
+        width: 42rem; height: 42rem; right: -8rem; top: -14rem;
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.95), transparent 65%);
+        animation: aurora-drift-1 22s ease-in-out infinite;
+    }
+
+    .aurora-blob-2 {
+        width: 30rem; height: 30rem; left: 30%; bottom: -14rem;
+        background: radial-gradient(circle, rgba(245, 158, 11, 0.7), transparent 65%);
+        animation: aurora-drift-2 26s ease-in-out infinite;
+    }
+
+    .aurora-blob-3 {
+        width: 34rem; height: 34rem; left: -10rem; top: -8rem;
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.6), transparent 65%);
+        animation: aurora-drift-3 30s ease-in-out infinite;
+    }
+
+    .aurora-blob-4 {
+        width: 26rem; height: 26rem; right: 20%; bottom: -6rem;
+        background: radial-gradient(circle, rgba(14, 165, 233, 0.6), transparent 65%);
+        animation: aurora-drift-1 34s ease-in-out infinite reverse;
+    }
+
+    .aurora-grid {
+        position: absolute;
+        inset: auto -50% -10% -50%;
+        height: 60%;
+        background-image:
+            linear-gradient(rgba(147, 197, 253, 0.22) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(147, 197, 253, 0.22) 1px, transparent 1px);
+        background-size: 56px 56px;
+        transform: perspective(600px) rotateX(62deg);
+        transform-origin: bottom;
+        mask-image: linear-gradient(to top, black 25%, transparent 95%);
+        animation: aurora-grid 18s linear infinite;
+    }
+
+    .aurora-spotlight {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(520px circle at var(--mx, 70%) var(--my, 30%), rgba(255, 255, 255, 0.14), transparent 45%);
+        transition: background 0.15s ease-out;
+    }
+
+    .aurora-grain {
+        position: absolute;
+        inset: 0;
+        opacity: 0.12;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+}
+
+@keyframes aurora-drift-1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(-14%, 12%) scale(1.12); }
+    66% { transform: translate(8%, 20%) scale(0.92); }
+}
+
+@keyframes aurora-drift-2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(22%, -18%) scale(1.2); }
+}
+
+@keyframes aurora-drift-3 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    40% { transform: translate(18%, 16%) scale(1.1); }
+    75% { transform: translate(-6%, 8%) scale(0.95); }
+}
+
+@keyframes aurora-grid {
+    from { background-position: 0 0; }
+    to { background-position: 0 56px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .aurora-blob, .aurora-grid { animation: none; }
+}
+
 /* ===== Fiche produit « cinématique » ===== */
 @layer components {
     .font-serif-display {

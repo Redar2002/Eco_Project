@@ -1,10 +1,12 @@
 <x-app-layout>
     {{-- ===== Hero ===== --}}
     <section class="container-shop pt-6 lg:pt-8">
-        <div class="relative overflow-hidden rounded-[2rem] bg-primary-950 text-white">
-            {{-- Décor --}}
-            <div class="pointer-events-none absolute -right-32 -top-32 h-[28rem] w-[28rem] rounded-full bg-primary-600/40 blur-3xl"></div>
-            <div class="pointer-events-none absolute -bottom-40 left-1/3 h-80 w-80 rounded-full bg-accent/20 blur-3xl"></div>
+        <div x-data="{ mx: '70%', my: '30%' }"
+             @mousemove="const r = $el.getBoundingClientRect(); mx = (($event.clientX - r.left) / r.width * 100) + '%'; my = (($event.clientY - r.top) / r.height * 100) + '%'"
+             :style="`--mx: ${mx}; --my: ${my}`"
+             class="relative isolate overflow-hidden rounded-[2rem] bg-[#070d24] text-white">
+            {{-- Fond animé --}}
+            @include('partials.aurora-background')
 
             <div class="relative grid items-center gap-10 px-6 py-14 sm:px-12 lg:grid-cols-2 lg:py-20">
                 <div>
