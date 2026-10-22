@@ -18,6 +18,8 @@
         @stack('head')
     </head>
     <body class="flex min-h-screen flex-col">
+        @include('partials.site-background')
+
         <a href="#contenu" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:shadow">Aller au contenu</a>
 
         @include('partials.header')

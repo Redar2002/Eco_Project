@@ -239,7 +239,7 @@
 
     {{-- ===== Produits similaires (fond clair classique) ===== --}}
     @if ($similar->isNotEmpty())
-        <section class="relative z-10 bg-white pt-20">
+        <section class="relative pt-20">
             <div class="container-shop">
                 <x-section-title title="Vous aimerez aussi" :href="route('products.index', ['categorie' => $product->category->slug])" link-label="Voir la catégorie" />
                 <div class="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">

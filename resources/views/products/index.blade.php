@@ -23,7 +23,7 @@
             {{-- ===== Filtres ===== --}}
             <div x-show="filtersOpen" x-cloak x-transition.opacity class="fixed inset-0 z-50 bg-ink-900/50 backdrop-blur-sm lg:hidden" @click="filtersOpen = false"></div>
             <aside :class="filtersOpen ? 'translate-x-0' : '-translate-x-full'"
-                   class="fixed inset-y-0 left-0 z-50 w-full max-w-xs -translate-x-full overflow-y-auto bg-white p-6 shadow-xl transition-transform duration-300 lg:static lg:z-auto lg:w-auto lg:max-w-none lg:translate-x-0 lg:overflow-visible lg:p-0 lg:shadow-none">
+                   class="fixed inset-y-0 left-0 z-50 w-full max-w-xs -translate-x-full overflow-y-auto bg-white p-6 shadow-xl transition-transform duration-300 lg:bg-transparent lg:static lg:z-auto lg:w-auto lg:max-w-none lg:translate-x-0 lg:overflow-visible lg:p-0 lg:shadow-none">
                 <div class="mb-6 flex items-center justify-between lg:hidden">
                     <h2 class="text-lg font-semibold">Filtres</h2>
                     <button type="button" @click="filtersOpen = false" class="rounded-full p-2 hover:bg-ink-100" aria-label="Fermer les filtres"><x-icon name="x" /></button>
