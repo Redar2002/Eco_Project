@@ -1,5 +1,5 @@
 {{-- En-tête sticky : barre d'annonce, logo, menu, recherche, compte et panier --}}
-<div x-data="{ mobileOpen: false, searchOpen: false }" @keydown.escape.window="mobileOpen = false; searchOpen = false">
+<div x-data="{ mobileOpen: false, searchOpen: false }" @keydown.escape.window="mobileOpen = false; searchOpen = false" class="contents">
     {{-- Barre d'annonce --}}
     <div class="bg-primary-950 text-white">
         <div class="container-shop flex h-9 items-center justify-center gap-6 text-xs font-medium">

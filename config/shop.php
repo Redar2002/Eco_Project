@@ -37,6 +37,48 @@ return [
         'address' => 'Hay El Maghreb El Arabi, Témara, Maroc',
     ],
 
+    /*
+    | Ambiances de la fiche produit « cinématique » (dégradés radiaux).
+    | light = true : texte brun foncé ; false : texte blanc.
+    */
+    'product_worlds' => [
+        'ivoire' => [
+            'label' => 'Ivoire',
+            'gradient' => 'radial-gradient(circle at center, #FFF8EC 0%, #F4E8D0 45%, #B89D6A 100%)',
+            'light' => true,
+            'particles' => ['#B89D6A', '#FFF8EC', '#D9C08F'],
+        ],
+        'cacao' => [
+            'label' => 'Cacao',
+            'gradient' => 'radial-gradient(circle at center, #6B4423 0%, #2A1810 50%, #080403 100%)',
+            'light' => false,
+            'particles' => ['#C08A5B', '#8B5A2B', '#F4E8D0'],
+        ],
+        'saphir' => [
+            'label' => 'Saphir',
+            'gradient' => 'radial-gradient(circle at center, #3B82F6 0%, #172554 45%, #020617 100%)',
+            'light' => false,
+            'particles' => ['#93C5FD', '#E2E8F0', '#60A5FA'],
+        ],
+        'pistache' => [
+            'label' => 'Pistache',
+            'gradient' => 'radial-gradient(circle at center, #CDE8B5 0%, #567A36 45%, #13200B 100%)',
+            // Texte blanc : le brun foncé manque de contraste sur le vert profond des bords
+            'light' => false,
+            'particles' => ['#CDE8B5', '#A3C985', '#F0F7E8'],
+        ],
+    ],
+
+    // Ambiance de départ de chaque catégorie (les sections suivantes enchaînent les autres)
+    'category_worlds' => [
+        't-shirts' => 'ivoire',
+        'sweats-hoodies' => 'cacao',
+        'jeans-pantalons' => 'saphir',
+        'vestes' => 'pistache',
+        'sneakers' => 'saphir',
+        'accessoires' => 'ivoire',
+    ],
+
     // Villes proposées au checkout (champ libre accepté aussi)
     'cities' => [
         'Casablanca', 'Rabat', 'Marrakech', 'Fès', 'Tanger', 'Agadir', 'Meknès',

@@ -49,6 +49,73 @@
     }
 }
 
+/* ===== Fiche produit « cinématique » ===== */
+@layer components {
+    .font-serif-display {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-variant-numeric: lining-nums;
+    }
+
+    /* Couches animées : elles rejouent leur entrée à chaque passage (classe .in-view) */
+    .showcase-watermark {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+        transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+    }
+
+    .showcase-media {
+        opacity: 0;
+        transform: translateX(-100px);
+        transition: opacity 1.5s ease 0.4s, transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
+    }
+
+    .showcase-copy {
+        opacity: 0;
+        transform: translateX(60px);
+        transition: opacity 1.5s ease 0.6s, transform 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s;
+    }
+
+    .in-view .showcase-watermark {
+        opacity: 0.08;
+        transform: none;
+    }
+
+    .in-view .showcase-media,
+    .in-view .showcase-copy {
+        opacity: 1;
+        transform: none;
+    }
+
+    .showcase-float {
+        animation: showcase-float 6s ease-in-out infinite;
+    }
+
+    .showcase-particle {
+        position: absolute;
+        border-radius: 9999px;
+        opacity: 0;
+        animation: showcase-particle linear infinite;
+        will-change: transform, opacity;
+    }
+}
+
+@keyframes showcase-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+@keyframes showcase-particle {
+    0% { transform: translate3d(0, 0, 0); opacity: 0; }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.7; }
+    100% { transform: translate3d(var(--drift, 0px), -60vh, 0); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .showcase-watermark, .showcase-media, .showcase-copy { transition: none; }
+    .showcase-float, .showcase-particle { animation: none; }
+}
+
 @layer utilities {
     .scrollbar-none {
         scrollbar-width: none;
